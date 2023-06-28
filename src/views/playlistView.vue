@@ -1,6 +1,6 @@
 <!-- index.template + index.js -->
 <template>
-    <div class="w-screen h-screen font-[30px]">
+    <div class="w-[390px] h-screen font-[30px]">
         <!-- 头部 -->
         <div class="w-screen mt-5">
             <icon icon="ci:chevron-left" color="#000" width="30" class="float-left" />
@@ -41,7 +41,6 @@
         async created(){
             const res = await fetchPlaylistHot();
             this.menu = res.data.tags;
-            
         },
         watch:{
             activeMenuItem:{
