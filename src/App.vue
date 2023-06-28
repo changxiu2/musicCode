@@ -4,8 +4,8 @@
     </div>
 </template>
 <script>
-    import IndexView from './views/IndexView.vue';
-    import PlaylistView from './views/PlaylistView.vue';
+    import IndexView from './views/indexView.vue';
+    import PlaylistView from './views/playlistView.vue';
     import { loadIcon } from '@iconify/vue2';
     export default {
         components: { IndexView, PlaylistView },
