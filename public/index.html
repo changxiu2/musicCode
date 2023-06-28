@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= htmlWebpackPlugin.options.title123 %>
+    </title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/Swiper/9.2.4/swiper-bundle.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">默认值</div>
+</body>
+<% htmlWebpackPlugin.options.cdn.script.forEach(function (item) {%>
+    <script src="<%=item%>"></script>
+    <%})%>
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+</html>
