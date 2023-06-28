@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen p-4 bg-gradient-to-b from-purple-100 to-pink-100">
+    <div class="w-screen m-auto p-4 bg-gradient-to-b from-purple-100 to-pink-100">
         <!-- 头部 -->
         <header class="h-[30px] flex justify-between box-border mb-[17px] relative">
             <icon icon="mi:menu" color="black" width="25" />
@@ -10,7 +10,7 @@
             </div>
             <icon icon="iconamoon:microphone-light" color="black" width="25" />
             <!-- 搜索建议 -->
-            <ul v-if="searchSuggestList.length" class="absolute top-[9vw] left-[14vw] w-[70%] p-[1vw] rounded-xl bg-[#fff]">
+            <ul v-if="searchSuggestList.length" class="absolute top-[9vw] left-[14vw] w-[70%] p-[1vw] rounded-xl bg-gradient-to-l from-purple-200 to-pink-200 z-10">
                 <li v-for="item in searchSuggestList" :key="item.id" @click="searchHandler(item.name)" class="mb-2">{{ item.name }}</li>
             </ul>
         </header>
@@ -18,7 +18,7 @@
         <div class="swiper mySwiper h-[35vw] mt-[4.537vw] rounded-xl overflow-hidden">
             <div class="swiper-wrapper">
                 <div class="swiper-slide " v-for="item in bannerList" :key="item.id">
-                    <img :src="item.pic" alt="" class="w-[92.22vw] h-[35.741vw] m-auto rounded-xl">
+                    <img :src="item.pic" alt="" class="w-[90%] m-auto rounded-xl">
                 </div>
             </div>
             <div class="swiper-pagination"></div>
@@ -53,28 +53,6 @@
             </div>
         </div>
         <!-- 新歌新碟 -->
-        <!-- <div class="mt-4">
-            <div class="flex justify-between mb-4">
-                <div class="flex items-center">
-                    <span class="font-[700]">新歌新碟/数字专辑</span>
-                    <icon icon="ep:arrow-right-bold" color="black" width="15" />
-                </div>
-                <icon icon="ri:more-2-fill" color="black" width="15" />
-            </div>
-            <van-swipe :loop="false" :width="100" class="w-[550vw] flex">
-                <van-swipe-item class="flex" v-for="item in newSong" :key="item.id" >
-                    <ul>
-                        <li class=" w-[89vw] h-[14.17vw] mb-4 flex" v-for="item2 in item.resources" :key="item2.id">
-                            <img :src="item2.uiElement.image.imageUrl" alt="" class="w-[14.17vw] h-[14.17vw] rounded-xl">
-                            <div class="ml-2 ">
-                                <p class="font-[700] text-[#000]">{{ item2.uiElement.mainTitle.title }}</p>
-                                <p class="text-[13px] text-[#666]">{{item2.uiElement.subTitle.title}}</p>
-                            </div>
-                        </li>
-                    </ul>
-                </van-swipe-item>
-            </van-swipe>
-        </div> -->
         <div class="mt-4 border-b pb-4 border-gray-300">
             <div class="flex justify-between wrapper mb-4">
                 <div class="flex items-center">
@@ -141,26 +119,77 @@
                 <span class="font-[700]">热门话题</span>
                 <icon icon="ri:more-2-fill" color="black" width="15" />
             </div>
-            <!-- <div class="scroll-wrapper overflow-hidden" ref="scrollsong">
+            <div class="scroll-wrapper overflow-hidden" ref="scrollsong">
                 <ul class="scroll-content flex w-[210vw]">
-                    <li class="scroll-item w-[120px] mr-3" v-for="item in song" :key="item.id">
-                        <div class="w-[120px] h-[120px] rounded">
-                            <img :src="item.picUrl" alt="" class="w-[120px] h-[120px] rounded-2xl">
+                    <li class="scroll-item w-[80.61vw] h-[35.44vw] mr-3 p-3 box-border rounded-2xl bg-gradient-to-b from-[#a0a07d] to-[#b3b599]">
+                        <div>
+                            <p class="flex items-center w-[47vw] mb-[1vw]">
+                                <Icon icon="solar:chat-round-like-linear" width="20" color="white" />
+                                <span class="text-[#fff]  ml-[1.3vw]">最令你感动的那首歌</span>
+                            </p>
+                            <p class="text-[#c9c9c9] text-[13px]">484万热度</p>
                         </div>
-                        <p class="w-[120px] text-[13px]">{{item.name}}</p>
+                        <div class="flex justify-between w-[100%] mt-[2vw]">
+                            <div>
+                                <p class="text-[#ececec]">Saint_Denis:今日份的感动</p>
+                                <p class="text-[#ececec]">"我希望我们能永远真诚且热烈"</p>
+                            </div>
+                            <div>
+                                <img src="http://p1.music.126.net/JtMBJSd2ZFtarcVTAYjUFQ==/109951165550061432.jpg" alt="" class="w-[14vw] h-[14vw] rounded-xl">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="scroll-item w-[80.61vw] h-[35.44vw] mr-3 p-3 box-border rounded-2xl bg-gradient-to-b from-[#937ea2] to-[#aa95b9]">
+                        <div>
+                            <p class="flex items-center w-[47vw] mb-[1vw]">
+                                <Icon icon="solar:chat-round-like-linear" width="20" color="white" />
+                                <span class="text-[#fff]  ml-[1.3vw]">最令你感动的那首歌</span>
+                            </p>
+                            <p class="text-[#c9c9c9] text-[13px]">22万热度</p>
+                        </div>
+                        <div class="flex justify-between w-[100%] mt-[2vw]">
+                            <div>
+                                <p class="text-[#ececec]">辣目小霏:今日份的感动</p>
+                                <p class="text-[#ececec]">you by chance.</p>
+                            </div>
+                            <div>
+                                <img src="http://p1.music.126.net/JtMBJSd2ZFtarcVTAYjUFQ==/109951165550061432.jpg" alt="" class="w-[14vw] h-[14vw] rounded-xl">
+                            </div>
+                        </div>
                     </li>
                 </ul>
-            </div> -->
+            </div>
         </div>
         <!-- 音乐日历 -->
         <div class="mt-4 border-b pb-4 border-gray-300">
             <div class="flex justify-between wrapper mb-4">
-                <div>
-                    <span class="font-[700]">音乐日历</span>
+                <div class="flex items-center">
+                    <span class="font-[700] mr-4">音乐日历</span>
+                    <div class="w-[13.1vw] h-[5.8vw] bg-[#ccc] rounded-3xl flex  justify-center items-center">
+                        <span class="text-[12px]">更多</span>
+                        <icon icon="ep:arrow-right-bold" color="black" width="12" />
+                    </div>
                 </div>
                 <icon icon="ri:more-2-fill" color="black" width="15" />
             </div>
-            <div></div>
+            <ul class="bg-white rounded-2xl shadow-inner">
+                <li v-for="(item,index) in calendar" class="flex items-center justify-around h-[20.78vw]">
+                    <div class="text-[13px] text-[#ccc] w-[65.63vw] h-[20vw] border-b border-gray-200 ml-[2vw] flex flex-col justify-center">
+                        <div v-if="index===0">
+                            <span>今天</span>
+                            <span v-if="new Date().getMonth()+1<10">0{{ new Date().getMonth()+1 }}/{{ new Date().getDate() }}</span>
+                            <span v-else>{{ new Date().getMonth()+1 }}/{{ new Date().getDate() }}</span>
+                        </div>
+                        <div v-if="index===1">
+                            <span>明天</span>
+                            <span v-if="new Date().getMonth()+1<10">0{{ new Date().getMonth()+1 }}/{{ new Date().getDate()+1 }}</span>
+                            <span v-else>{{ new Date().getMonth()+1 }}/{{ new Date().getDate() }}</span>
+                        </div>
+                        <div class="font-[700] text-[#000] text-[15px] w-[91%] h-[20px] overflow-hidden whitespace-normal text-ellipsis">{{ item.title }}</div>
+                    </div>
+                    <img :src="item.imgUrl" class="w-[14.83vw] h-[14.83vw] rounded-xl" alt="">
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -211,7 +240,6 @@
                 const res = await fetchSearchResult({
                     keywords:keywords || this.search.realkeyword
                 })
-                console.log(res);
             },
         },
         async created(){
@@ -231,13 +259,9 @@
             this.newSong = resBanner.data.data.blocks[5].creatives;
             // 排行榜
             this.charts = resBanner.data.data.blocks[3].creatives;
-            // 热门话题
-            // const res = await fetchHotTopic();
-            // console.log(res);
-            // this.hot = res;
             // 音乐日历
             const res = await fetchCalendar();
-            this.calendar = res.data.data.calendarEvents;
+            this.calendar = res.data.data.calendarEvents.slice(0,2);
             console.log(this.calendar);
         },
         watch:{
