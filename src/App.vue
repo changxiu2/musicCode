@@ -1,17 +1,19 @@
 <template>
     <div class="w-screen h-screen">
-        <IndexView v-if="visibleView === 'IndexView'"/>
+        <!-- <IndexView v-if="visibleView === 'IndexView'"/> -->
+        <Index v-if="visibleView === 'Index'"/>
     </div>
 </template>
 <script>
     import IndexView from './views/indexView.vue';
     import PlaylistView from './views/playlistView.vue';
+    import Index from './views/IndexView/Index.vue'
     import { loadIcon } from '@iconify/vue2';
     export default {
-        components: { IndexView, PlaylistView },
+        components: { IndexView, PlaylistView,Index },
         data() {
             return {
-                visibleView: 'IndexView',
+                visibleView: 'Index',
             };
         },
         created() {

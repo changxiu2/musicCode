@@ -3,7 +3,7 @@
         <div class="max-w-[1000px] m-auto">
             <!-- 头部 -->
             <header class="h-[30px] flex justify-between box-border mb-[17px] relative">
-                <icon icon="mi:menu" color="black" width="25" />
+                <icon @click.native="drawerVisible = !drawerVisible" class="z-10" icon="mi:menu" color="black" width="25" />
                 <div class="w-[70%] relative">
                     <input type="text" class="w-[100%] h-[30px] pl-[35px] border rounded-full text-[14px] outline-[pink] bg-gradient-to-l from-purple-200 to-pink-200" :placeholder="search.showKeyword" v-model="userSearchKeywords">
                     <icon @click.native="searchHandler(userSearchKeywords)" class="absolute top-[7px] left-[12px] z-10" icon="simple-line-icons:magnifier" color="#666" width="17"/>
@@ -26,31 +26,61 @@
             </div>
             <!-- 菜单 -->
             <div class="scroll-wrapper overflow-hidden mt-6" ref="scroll">
-                <ul class="scroll-content flex w-[109vw]">
-                    <li class="scroll-item mr-6 w-[10vw] flex flex-col items-center" v-for="item in menuList" :key="item.id">
-                        <img :src="item.iconUrl" class="red-image w-[10vw] h-[10vw]" alt="">
-                        <p class="text-[1.7vw] text-[#888]">{{item.name}}</p>
-                    </li>
-                </ul>
+                <div class="scroll-content flex w-[175vw]">
+                    <menuView v-for="item in menuList" :key="item.id" :menu="item" class="scroll-item mr-6 w-[10vw] flex flex-col items-center"></menuView>
+                </div>
             </div>
             <!-- 推荐歌单 -->
+            <!-- <songView label="推荐歌单">
+                <RecommondPlaylistItem v-for="item in song" :key="item.id" :source="item" class="scroll-item w-[32vw] mr-4"/>
+            </songView> -->
             <div class="mt-5 border-b pb-4 border-gray-300">
                 <div class="flex justify-between wrapper mb-5">
                     <div class="flex items-center">
                         <span class="font-[700] text-[18px]">推荐歌单</span>
                         <icon icon="ep:arrow-right-bold" color="black" width="15" />
                     </div>
-                    <icon icon="ri:more-2-fill" color="black" width="15" />
+                    <icon @click.native="drawerSongVisible = !drawerSongVisible,info='推荐歌单'" icon="ri:more-2-fill" color="black" width="15" />
                 </div>
                 <div class="scroll-wrapper overflow-hidden" ref="scrollsong">
-                    <ul class="scroll-content flex w-[210vw]">
-                        <li v-for="item in song" :key="item.id" class="scroll-item w-[32vw] mr-4 ">
-                            <img :src="item.picUrl" alt="" class="w-[100%] rounded-2xl">
-                            <p class="w-[100%] text-[13px]">{{item.name}}</p>
-                        </li>
-                    </ul>
+                    <div class="scroll-content flex w-[200vw]">
+                        <RecommondPlaylistItem v-for="(item,index) in song" :key="item.id" :source="item" class="scroll-item w-[32vw] mr-4">
+                            <div v-if="index === 0" v-for="size in item.resources" :key="size.id" class="w-[32vw] h-[32vw] rounded-2xl overflow-hidden relative">
+                                <transition name="sizeStyle">
+                                    <div v-if="visible" class="absolute top-0 left-0">
+                                        <img :src="size.uiElement.image.imageUrl" alt="" class="w-[32vw] h-[32vw] rounded-2xl">
+                                        <p class="w-[100%] text-[13px]">{{size.uiElement.mainTitle.title}}</p> 
+                                    </div>
+                                </transition>
+                            </div>
+                        </RecommondPlaylistItem>
+                    </div>
                 </div>
             </div>
+            <!-- <div class="wrapper h-[100px] border-[2px] border-[red] overflow-hidden" ref="scroll">
+                <div>
+                    <h1>1</h1>
+                <h1>2</h1>
+                <h1>3</h1>
+                <h1>4</h1>
+                <h1>5</h1>
+                <h1>6</h1>
+                <h1>7</h1>
+                <h1>8</h1>
+                <h1>9</h1>
+                <h1>10</h1>
+                <h1>11</h1>
+                <h1>12</h1>
+                <h1>13</h1>
+                <h1>14</h1>
+                <h1>15</h1>
+                <h1>16</h1>
+                <h1>17</h1>
+                <h1>18</h1>
+                <h1>19</h1>
+                <h1>20</h1>
+                </div>
+            </div> -->
             <!-- 新歌新碟 -->
             <div class="mt-5 border-b pb-4 border-gray-300">
                 <div class="flex justify-between wrapper mb-5">
@@ -58,19 +88,11 @@
                         <span class="font-[700] text-[18px]">新歌新碟/数字专辑</span>
                         <icon icon="ep:arrow-right-bold" color="black" width="15" />
                     </div>
-                    <icon icon="ri:more-2-fill" color="black" width="15" />
+                    <icon @click.native="drawerSongVisible = !drawerSongVisible,info='新歌新碟/数字专辑'" icon="ri:more-2-fill" color="black" width="15" />
                 </div>
                 <div class="scroll-wrapper overflow-hidden" ref="newsong">
                     <div class="scroll-content flex w-[550vw]">
-                        <ul v-for="item in newSong" :key="item.id" class="scroll-item w-[89vw]">
-                            <li class=" w-[89vw] h-[14.17vw] mb-4 flex" v-for="item2 in item.resources" :key="item2.id">
-                                <img :src="item2.uiElement.image.imageUrl" alt="" class="w-[14.17vw] h-[14.17vw] rounded-xl">
-                                <div class="ml-2 ">
-                                    <p class="font-[700] text-[#000]">{{ item2.uiElement.mainTitle.title }}</p>
-                                    <p class="text-[13px] text-[#666]">{{item2.uiElement.subTitle.title}}</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <newSongView v-for="item in newSong" :key="item.id" :newSongItem="item" class="scroll-item w-[89vw]"/>
                     </div>
                 </div>
             </div>
@@ -81,7 +103,7 @@
                         <span class="font-[700] text-[18px]">排行榜</span>
                         <icon icon="ep:arrow-right-bold" color="black" width="15" />
                     </div>
-                    <icon icon="ri:more-2-fill" color="black" width="15" />
+                    <icon @click.native="drawerSongVisible = !drawerSongVisible,info='排行榜'" icon="ri:more-2-fill" color="black" width="15" />
                 </div>
                 <div class="scroll-wrapper overflow-hidden" ref="scrollcharts">
                     <div class="scroll-content flex w-[550vw]">
@@ -169,7 +191,7 @@
                             <icon icon="ep:arrow-right-bold" color="black" width="12" />
                         </div>
                     </div>
-                    <icon icon="ri:more-2-fill" color="black" width="15" />
+                    <icon @click.native="drawerSongVisible = !drawerSongVisible,info='音乐日历'" icon="ri:more-2-fill" color="black" width="15" />
                 </div>
                 <ul class="bg-white rounded-2xl shadow-inner">
                     <li v-for="(item,index) in calendar" class="flex items-center justify-around h-[20.78vw]">
@@ -190,6 +212,60 @@
                     </li>
                 </ul>
             </div>
+
+
+            
+            <!-- 无->有（enter进场动画）
+            .[name]-enter{  }
+            .[name]-enter-to{  }
+            
+            有->无（leave离场动画） 
+            .[name]-leave{  }
+            .[name]-leave-to{  } -->
+ 
+            <!-- <button @click="visible = !visible">toggle</button>
+            <div class="w-[200px] h-[200px] border-[2px] border-[red] overflow-hidden relative">
+                <transition name="abc">
+                    <div v-if="visible" class="w-[200px] h-[200px] bg-green-200 absolute top-0 left-0"></div>
+                </transition>
+                <transition name="abc">
+                    <div v-if="!visible" class="w-[200px] h-[200px] bg-orange-400 absolute top-0 left-0"></div>
+                </transition>
+            </div> -->
+
+            <!-- <button @click="drawerVisible = !drawerVisible">drawerToggle</button> -->
+            <!-- <Drawer :visible="drawerVisible" @updata="fn"> -->
+            <Drawer :visible.sync="drawerVisible" direction="ltr" title="首页">
+                <!-- <template #header>
+                    <div class="flex justify-between items-center">
+                        <p>{{title}}</p>
+                        <Icon @click.native="close" icon="carbon:close-outline" width="20"/>
+                    </div>
+                </template> -->
+                <h1>123</h1>
+                <h1>123</h1>
+                <h1>123</h1>
+                <!-- <div class="flex justify-between items-center">
+                    <p>推荐歌单</p>
+                    <Icon icon="carbon:close-outline" width="20" />
+                </div> -->
+            </Drawer>
+            <Drawer :visible.sync="drawerSongVisible" direction="btt" :title="info" width="100%" class="rounded-t-2xl rounded-r-2xl">
+                <div class="w-[90%] m-auto m-t-[30px] border-t-[1px] border-[#ccc]">
+                    <p class="flex items-center h-[9vw]">
+                        <Icon class="ml-[3vw]" icon="iconamoon:like-light" width="30" />
+                        <span class="ml-[5vw]">优点推荐</span>
+                    </p>
+                    <p class="flex items-center h-[9vw]"> 
+                        <Icon class="ml-[3vw]" icon="ion:heart-dislike-outline" width="30" />
+                        <span class="ml-[5vw]">减少推荐</span>
+                    </p>
+                    <p class="flex items-center h-[9vw]">
+                        <Icon class="ml-[3vw]" icon="material-symbols:refresh" width="30"/>
+                        <span class="ml-[5vw]">刷新</span>
+                    </p>
+                </div>
+            </Drawer>
         </div>
     </div>
 </template>
@@ -205,6 +281,9 @@
         fetchSearchResult,
         fetchSearchSuggest
     } from '@/request/index';
+    import menuView from './Components/menuView.vue';
+    import newSongView from './Components/newSongView.vue';
+    import RecommondPlaylistItem from './Components/RecommondPlaylistItem.vue';
     export default{
         data(){
             return {
@@ -218,13 +297,23 @@
                 userSearchKeywords:'',//
                 searchSuggestList:[],//搜索建议
                 search:{},
+                visible:true,
+                drawerVisible:false,
+                drawerSongVisible:false,
+                info:'',
             }
+        },
+        components:{menuView,newSongView,
+            songView:()=>import('./Components/songView.vue'),
+            RecommondPlaylistItem:()=>import('./Components/RecommondPlaylistItem.vue'),
         },   
         mounted() {
+            new BScroll(this.$refs.scroll);
             this.init(this.$refs.scroll);
             this.init(this.$refs.scrollsong);
             this.init(this.$refs.newsong);
             this.init(this.$refs.scrollcharts);
+            // ref + $refs  获取页面上的组件、DOM节点
         },
         beforeDestroy() {
             this.bs.destroy()
@@ -241,6 +330,9 @@
                     keywords:keywords || this.search.realkeyword
                 })
             },
+            fn(e){
+                this.drawerVisible = e;
+            }
         },
         async created(){
             // 搜索
@@ -254,7 +346,7 @@
             this.menuList = resMenu.data.data;
             // 推荐歌单
             const resSong = await fetchPersonalizedLimit();
-            this.song = resSong.data.result;
+            this.song = resSong.data.data.blocks[1].creatives;
             // 新歌新碟
             this.newSong = resBanner.data.data.blocks[5].creatives;
             // 排行榜
@@ -273,10 +365,6 @@
 </script>
 <style scoped>
     /* scoped 样式隔离 只作用于当前页面，不影响全局的样式 */
-    .swiper-pagination-bullet {
-        background-color: #fff;
-        --swiper-theme-color: #fff
-    }
     img{
         max-width: none;
     }
@@ -285,5 +373,41 @@
         height: 0px;
         width: 20px;
     }
+    .abc-enter{
+        transform: translateY(100%) scale(0.7);
+    }
+    .abc-enter-active,.abc-leave-active{
+        transition: all 1.2s ease-in-out;
+    }
+    .abc-enter-to{
+        /* opacity: 1;
+        width: 200px; */
+        transform: translateY(0) scale(1);
+    }
+    .abc-leave{
+        transform: translateY(0) scale(1);
+    }
+    .abc-leave-to{
+        /* opacity: 0; */
+        transform: translateY(-100%)scale(0.7);
+    }
     
+    .sizeStyle-enter{
+        transform: translateY(100%) scale(0.7);
+    }
+    .sizeStyle-enter-active,.sizeStyle-leave-active{
+        transition: all 1.2s ease-in-out;
+    }
+    .sizeStyle-enter-to{
+        /* opacity: 1;
+        width: 200px; */
+        transform: translateY(0) scale(1);
+    }
+    .sizeStyle-leave{
+        transform: translateY(0) scale(1);
+    }
+    .sizeStyle-leave-to{
+        /* opacity: 0; */
+        transform: translateY(-100%)scale(0.7);
+    }
 </style>
