@@ -16,14 +16,11 @@
                 </ul>
             </header>
             <!-- 轮播图 -->
-            <div class="swiper mySwiper h-[35vw] mt-[4.537vw] rounded-xl overflow-hidden">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide " v-for="item in bannerList" :key="item.id">
-                        <img :src="item.pic" alt="" class="w-[95%] h-[100%] m-auto rounded-xl">
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
+            <van-swipe class="my-swipe h-[40vw] mt-[4.537vw] rounded-xl overflow-hidden" :autoplay="3000" indicator-color="white">
+                <van-swipe-item v-for="item in bannerList" :key="item"> 
+                    <img :src="item.pic" class="w-[100%] h-[40vw] mx-auto">
+                </van-swipe-item>
+            </van-swipe>
             <!-- 菜单 -->
             <div class="scroll-wrapper overflow-hidden mt-6" ref="scroll">
                 <div class="scroll-content flex w-[175vw]">
@@ -140,7 +137,7 @@
                     <span class="font-[700] text-[18px]">热门话题</span>
                     <icon icon="ri:more-2-fill" color="black" width="15" />
                 </div>
-                <div class="scroll-wrapper overflow-hidden" ref="scrollsong">
+                <div class="scroll-wrapper overflow-hidden" ref="hot">
                     <ul class="scroll-content flex w-[210vw]">
                         <li class="scroll-item w-[80.61vw] h-[35.44vw] mr-3 p-3 flex flex-col justify-around box-border rounded-2xl bg-gradient-to-b from-[#a0a07d] to-[#b3b599]">
                             <div>
@@ -212,29 +209,7 @@
                     </li>
                 </ul>
             </div>
-
-
             
-            <!-- 无->有（enter进场动画）
-            .[name]-enter{  }
-            .[name]-enter-to{  }
-            
-            有->无（leave离场动画） 
-            .[name]-leave{  }
-            .[name]-leave-to{  } -->
- 
-            <!-- <button @click="visible = !visible">toggle</button>
-            <div class="w-[200px] h-[200px] border-[2px] border-[red] overflow-hidden relative">
-                <transition name="abc">
-                    <div v-if="visible" class="w-[200px] h-[200px] bg-green-200 absolute top-0 left-0"></div>
-                </transition>
-                <transition name="abc">
-                    <div v-if="!visible" class="w-[200px] h-[200px] bg-orange-400 absolute top-0 left-0"></div>
-                </transition>
-            </div> -->
-
-            <!-- <button @click="drawerVisible = !drawerVisible">drawerToggle</button> -->
-            <!-- <Drawer :visible="drawerVisible" @updata="fn"> -->
             <Drawer :visible.sync="drawerVisible" direction="ltr" title="首页">
                 <!-- <template #header>
                     <div class="flex justify-between items-center">
@@ -245,10 +220,6 @@
                 <h1>123</h1>
                 <h1>123</h1>
                 <h1>123</h1>
-                <!-- <div class="flex justify-between items-center">
-                    <p>推荐歌单</p>
-                    <Icon icon="carbon:close-outline" width="20" />
-                </div> -->
             </Drawer>
             <Drawer :visible.sync="drawerSongVisible" direction="btt" :title="info" width="100%" class="rounded-t-2xl rounded-r-2xl">
                 <div class="w-[90%] m-auto m-t-[30px] border-t-[1px] border-[#ccc]">
@@ -275,7 +246,6 @@
     import {
         fetchHomepageBlockPage,
         fetchHomepageDragonBall,
-        fetchPersonalizedLimit,
         fetchCalendar,
         fetchSearchDefault,
         fetchSearchResult,
@@ -313,6 +283,7 @@
             this.init(this.$refs.scrollsong);
             this.init(this.$refs.newsong);
             this.init(this.$refs.scrollcharts);
+            this.init(this.$refs.hot);
             // ref + $refs  获取页面上的组件、DOM节点
         },
         beforeDestroy() {
@@ -345,8 +316,8 @@
             const resMenu = await fetchHomepageDragonBall();
             this.menuList = resMenu.data.data;
             // 推荐歌单
-            const resSong = await fetchPersonalizedLimit();
-            this.song = resSong.data.data.blocks[1].creatives;
+            this.song = resBanner.data.data.blocks[1].creatives;
+            console.log(this.song);
             // 新歌新碟
             this.newSong = resBanner.data.data.blocks[5].creatives;
             // 排行榜

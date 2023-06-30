@@ -51,7 +51,8 @@
                         width:'100vw',
                         left:0,
                         bottom:0,
-                        
+                        borderTopLeftRadius:"5vw",
+                        borderTopRightRadius:"5vw"
                     }
                 }else if(this.direction === 'ttb'){
                     return {
@@ -94,7 +95,7 @@
         transform: translateY(100%);
     }
     .btt-enter-active,.btt-leave-active {
-        transition: all ease-in-out 2s;
+        transition: all ease-in-out 1s;
     }
     .btt-enter-to,.btt-leave{
         transform: translateY(0);
@@ -103,7 +104,7 @@
         transform: translateX(-100%);
     }
     .ltr-enter-active,.ltr-leave-active {
-        transition: all ease-in-out 2s;
+        transition: all ease-in-out 1s;
     }
     .ltr-enter-to,.ltr-leave{
         transform: translateX(0);
