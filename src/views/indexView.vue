@@ -16,14 +16,11 @@
                 </ul>
             </header>
             <!-- 轮播图 -->
-            <div class="swiper mySwiper h-[35vw] mt-[4.537vw] rounded-xl overflow-hidden">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide " v-for="item in bannerList" :key="item.id">
-                        <img :src="item.pic" alt="" class="w-[95%] h-[100%] m-auto rounded-xl">
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
+            <van-swipe class="my-swipe h-[40vw] mt-[4.537vw] rounded-xl overflow-hidden" :autoplay="3000" indicator-color="white">
+                <van-swipe-item v-for="item in bannerList" :key="item"> 
+                    <img :src="item.pic" class="w-[100%] h-[40vw] mx-auto">
+                </van-swipe-item>
+            </van-swipe>
             <!-- 菜单 -->
             <div class="scroll-wrapper overflow-hidden mt-6" ref="scroll">
                 <ul class="scroll-content flex w-[109vw]">
@@ -118,7 +115,7 @@
                     <span class="font-[700] text-[18px]">热门话题</span>
                     <icon icon="ri:more-2-fill" color="black" width="15" />
                 </div>
-                <div class="scroll-wrapper overflow-hidden" ref="scrollsong">
+                <div class="scroll-wrapper overflow-hidden" ref="hot">
                     <ul class="scroll-content flex w-[210vw]">
                         <li class="scroll-item w-[80.61vw] h-[35.44vw] mr-3 p-3 flex flex-col justify-around box-border rounded-2xl bg-gradient-to-b from-[#a0a07d] to-[#b3b599]">
                             <div>
@@ -225,6 +222,7 @@
             this.init(this.$refs.scrollsong);
             this.init(this.$refs.newsong);
             this.init(this.$refs.scrollcharts);
+            this.init(this.$refs.hot);
         },
         beforeDestroy() {
             this.bs.destroy()
