@@ -1,12 +1,13 @@
 <template>
-    <div @click="clickHandler">
-        <transition :name="direction">
-            <div v-show="visible" class="w-screen h-[220px] bg-white fixed z-[999] overflow-auto" :style="[drawerContentStyle,{width}]">
+    <div @click="clickHandler" :class="{dark:switchCheckStatus}">
+        <div class="bg-white dark:text-[#fff]">
+            <transition :name="direction">
+            <div v-show="visible" class="w-screen bg-white dark:bg-[#2a2929] fixed z-[999] overflow-auto" :style="[drawerContentStyle,{width}]">
                 <div>
                     <slot name="header">
-                        <div class="flex justify-between items-center p-4">
-                            <p class="text-[#ccc]">{{title}}</p>
-                            <Icon @click.native="closeDrawer" icon="carbon:close-outline" width="20"/>
+                        <div class="flex justify-between items-center p-4 border-b-[0.35vw] border-[#ccc]">
+                            <p class="text-[#ccc] text-[4vw] font-[800] ml-[4vw]">{{title}}</p>
+                            <Icon @click.native="closeDrawer" icon="carbon:close-outline" class=" w-[6vw] h-[6vw]"/>
                         </div>
                     </slot>
                 </div>
@@ -15,7 +16,10 @@
                 </div>
             </div>
         </transition>
-        <div v-if="visible" ref="drawerMask" class="bg-black opacity-20 fixed top-0 right-0 bottom-0 left-0 z-[998]"></div>
+        <!-- 蒙版 -->
+        <div v-if="visible" ref="drawerMask" class="bg-black opacity-40 fixed top-0 right-0 bottom-0 left-0 z-[998]"></div>
+        </div>
+        
     </div>
 </template>
 <script>
@@ -65,7 +69,6 @@
                         height:'100vh',
                         left:0,
                         top:0,
-                        background:'#f5f5f5',
                     }
                 }else if(this.direction === 'rtl'){
                     return {
