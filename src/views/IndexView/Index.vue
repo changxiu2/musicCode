@@ -27,7 +27,7 @@
             <div class="scroll-wrapper overflow-hidden mt-6" ref="scroll">
                 <div class="scroll-content flex w-[175vw] relative">
                     <menuView v-for="item in menuList" :key="item.id" :menu="item" class="scroll-item mr-[5vw] w-[16vw] flex flex-col items-center"></menuView>
-                    <span class="dark:text-[#1a1c23] absolute top-[6.2vw] left-[6.8vw] text-[3.5vw] text-[#fff] font-[800]" style="pointer-events: auto;">{{ new Date().getDate() }}</span>
+                    <span class="dark:text-[#1a1c23] absolute top-[6vw] left-[6.3vw] text-[3.5vw] text-[#fff] font-[800]" style="pointer-events: auto;">{{ new Date().getDate() }}</span>
                 </div>
             </div>
             <!-- 推荐歌单 -->   
@@ -98,7 +98,7 @@
                     <span class="font-[700] text-[4vw]">热门话题</span>
                     <icon @click.native="drawerSongVisible = !drawerSongVisible,info='热门话题'" icon="ri:more-2-fill" class="w-[4vw] h-[6vw]" />
                 </div>
-                <div class="h-[28vw] scroll-wrapper overflow-hidden" ref="hot">
+                <div class="scroll-wrapper overflow-hidden" ref="hot">
                     <ul class="scroll-content flex w-[210vw]">
                         <li class="scroll-item w-[80.61vw] mr-3 p-3 flex flex-col justify-around box-border rounded-2xl bg-gradient-to-b from-[#a0a07d] to-[#b3b599]">
                             <div>
