@@ -1,0 +1,30 @@
+// 动态返回组件的这些逻辑  全部单独封装为
+import IndexView from './views/indexView.vue';
+import PlaylistView from './views/playlistView.vue';
+import Index from './views/IndexView/Index.vue';
+
+const viewMap = {
+    IndexView,PlaylistView,Index
+}
+export default {
+    // components: { IndexView, PlaylistView,Index },
+    data() {
+        return {
+            visibleView: 'Index',
+        };
+    },
+    // 动态返回一个数据的data
+    // component === mwthods + data
+        computed:{
+        currentComponent(){
+            // 某一程度上相当于data，保留了计算属性
+            return viewMap[this.visibleView];
+        }
+    },
+    beforeCreate(){
+        window.onhashchange = () =>{
+            this.visibleView = location.hash.replace('#','')
+            console.log(this.visibleView);
+        }
+    },
+};
