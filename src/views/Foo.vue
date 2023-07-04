@@ -1,24 +1,20 @@
 <template>
     <div>
-        <h1 @click="increase">Foo view{{ count }}</h1>
+        <h1 @click="increase">{{ count }}{{ msg }}</h1>
         <button @click="fn">toggle dialog</button>
         <!-- <Dialog title="警告" message="我是提示内容"></Dialog> -->
     </div>
 </template>
 <script>
     import Dialog from '@/components/Dialog';
-    import store from '@/store';
+    import {mapState,mapMutations} from '@/vuex';
     export default {
+        // computed: mapState(['count','msg']),
         computed:{
-            count(){
-                return store.state.count;
-            }
-        },
+            ...mapState(['count','msg']),
+        }, 
         methods:{
-            // increase(){
-            //     store.mutations.increase();
-            // },
-            increase:store.mutations.increase,
+            ...mapMutations(['increase']),
             fn(){
                 Dialog({title:'警告',message:'我是提示内容！'})
                 .then(function () {

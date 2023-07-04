@@ -34,19 +34,32 @@ import router from '@/router';
 //         },
 //     ]
 // })
-import Drawer from './components/Drawer';
-import Switch from './components/Switch'
-// import Dialog from './components/Dialog'
+import Drawer from '@/components/Drawer.vue';
+import Switch from '@/components/Switch.vue';
 import {Swipe, SwipeItem } from 'vant';
 import 'vant/lib/index.css';
+import store from '@/store';
 Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.component('Icon', Icon);
-// Vue.component('Drawer', Drawer);
-// Vue.component('v-switch', Switch);
-Vue.use(Switch);
-Vue.use(Drawer);
+Vue.component('Drawer', Drawer);
+Vue.component('v-switch', Switch);
+// Vue.use(Drawer);
 // Vue.use(Dialog);
+
+const app = new Vue({
+    el: '#app',
+    // 4.将router注入到root中
+    // 提供了两个vue（全局的）实例属性 $router === router 、$route
+    router,
+    store,
+    components: { App },
+    template: '<App/>',
+    created(){
+        console.log(this.$store);
+    }
+});
+
 
 // // Vue.extend给vue构造函数配置项设置默认值
 // const Children = Vue.extend({
@@ -67,15 +80,6 @@ Vue.use(Drawer);
 //     components: { App },
 //     template: '<App/>',
 // });
-
-const app = new Vue({
-    el: '#app',
-    // 4.将router注入到root中
-    // 提供了两个vue（全局的）实例属性 $router === router 、$route
-    router,
-    components: { App },
-    template: '<App/>',
-});
 
 // app.$mount();//把模板编译为浏览器能够识别的html片段并赋值给app的$el属性
 // setTimeout(()=>{
