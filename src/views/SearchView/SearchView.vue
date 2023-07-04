@@ -3,9 +3,7 @@
         <div class="w-screen h-screen p-[3vw] bg-[#F7F8FC] dark:text-[#fff] dark:bg-gray-800">
             <!-- 头部 -->
             <header class="h-[20vw] flex justify-between items-center box-border relative">
-                <router-link to="/Index">
-                    <Icon class="z-10 w-[6vw] h-[6vw]" icon="ph:arrow-left-bold" />
-                </router-link>
+                <Icon @click.native="IndexFn" class="z-10 w-[6vw] h-[6vw]" icon="ph:arrow-left-bold" />
                 <div class="w-[75vw] relative">
                     <div class="w-[75vw] relative">
                         <input type="text" class="bg-white dark:text-[#fff] dark:bg-[#31333a] w-[100%] h-[10vw] pl-[10vw] border rounded-full text-[4.47vw] outline-[pink]" :placeholder="search.showKeyword" v-model="userSearchKeywords">
@@ -84,6 +82,9 @@
             }
         },
         methods:{
+            IndexFn(){
+                this.$router.push('/Index')
+            },
             async searchHandler(keywords){
                 const res = await fetchSearchResult({
                     keywords:keywords || this.search.realkeyword
