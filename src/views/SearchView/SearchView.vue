@@ -37,9 +37,9 @@
             </div>
             <!--  -->
             <div class="mb-[10vw]">
-                <van-swipe :loop="false" :show-indicators="false">
+                <van-swipe :loop="false" width="270" :show-indicators="false">
                     <van-swipe-item v-for="(item,index) in rankDate" :key="item.id" class="w-[64.3vw]">
-                        <div class="w-[64.3vw] mr-[2.87vw] px-[4vw] bg-white dark:bg-[#] rounded-xl">
+                        <div class="w-[64.3vw] mr-[2.87vw] px-[4vw] bg-white dark:bg-[#31333a] rounded-xl">
                             <div class="text-[4.26vw] font-[800] h-[18vw] border-b-[0.32vw] leading-12 flex items-center"> {{ item.name }}
                                 <p v-if="index===0" class="text-[2.84vw] w-[12.97vw] h-[5.68vw] rounded-xl ml-[3.02vw] bg-[#F0F5F6] flex items-center justify-center mt-[1vw]">播放<Icon icon="mdi:play" /></p>
                             </div>
@@ -47,7 +47,7 @@
                                 <li class="h-[13.56vw] leading-[13.56vw] font-[800] flex items-center" v-for="(item2,index2) in item.tracks.slice(0,20)">
                                     <p v-if="index2+1<=3" class="text-[#dd4147] w-[3.95vw] text-[3.27vw]">{{ index2+1 }}</p>
                                     <p v-if="index2+1>3" class="text-[#9a9a9d] w-[3.95vw] text-[3.27vw]">{{ index2+1 }}</p>
-                                    <p class="ml-[5.93vw4] text-[3.46vw] w-[47.74vw] overflow-hidden whitespace-nowrap text-ellipsis">{{item2.name}}</p>
+                                    <p class="ml-[5.93vw] text-[3.46vw] w-[47.74vw] overflow-hidden whitespace-nowrap text-ellipsis">{{item2.name}}</p>
                                 </li>
                             </ul>
                         </div>
@@ -107,11 +107,8 @@
             // console.log(this.rankDate);
             const playlist = await Promise.all(this.rank.map(({id}) => axios.get('https://netease-cloud-music-api-five-roan-88.vercel.app/playlist/detail', {params: {id}})));
             this.rankDate = playlist.map(item => item.data.playlist).slice(0,11);
-            console.log(this.rankDate[0].tracks.slice(0,20));
-            
+            // console.log(this.rankDate[0].tracks.slice(0,20));
         },
-        
-
         watch:{
             userSearchKeywords:_.debounce(async function(keywords){
                 const res = await fetchSearchSuggest(keywords);

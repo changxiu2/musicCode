@@ -1,6 +1,6 @@
 <template>
     <div :class="{dark:switchCheckStatus}">
-        <div class="w-screen h-[100vh] pb-[3vw] bg-[#F7F8FC] dark:bg-black dark:text-[#fff]" :class='switchCheckStatus ? "overflow-auto" : "overflow-hidden"'>
+        <div class="w-screen h-[100vh] pb-[3vw] bg-[#F7F8FC] dark:bg-black dark:text-[#fff]" :class='drawerVisible ? "overflow-hidden" : "overflow-auto"'>
             <div>
                 <!-- 头部 -->
                 <header class="w-screen px-[3vw] pt-[3vw] h-[20vw] flex justify-between items-center box-border fixed top-0  left-0  z-10 bg-[#F7F8FC] dark:bg-black">
