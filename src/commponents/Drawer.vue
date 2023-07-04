@@ -1,8 +1,8 @@
 <template>
     <div @click="clickHandler" :class="{dark:switchCheckStatus}">
-        <div class="bg-white dark:text-[#fff]">
+        <div class="dark:text-[#fff]">
             <transition :name="direction">
-            <div v-show="visible" class="w-screen bg-white dark:bg-[#2a2929] fixed z-[999] overflow-auto" :style="[drawerContentStyle,{width}]">
+            <div v-show="visible" class="w-screen bg-[#f5f5f5] dark:bg-[#2a2929] fixed z-[999] overflow-auto" :style="[drawerContentStyle,{width}]">
                 <div>
                     <slot name="header">
                         <div class="flex justify-between items-center p-4 border-b-[0.35vw] border-[#ccc]">

@@ -16,6 +16,7 @@ export const fetchSearchSuggest = (keywords) => http.get('/search/suggest',{para
 
 export const fetchHomepageBlockPage = () => homepageHttp.get('/homepage/block/page');//首页轮播图/推荐歌单/新歌新碟数据
 export const fetchHomepageDragonBall = () => homepageHttp.get('/homepage/dragon/ball');//首页菜单数据
-// export const fetchPersonalizedLimit = () => homepageHttp.get('/personalized?limit=6');//首页推荐歌单数据
-// export const fetchHotTopic = () => homepageHttp.get('/hot/topic');//首页推荐歌单数据
 export const fetchCalendar = () => homepageHttp.get('/calendar?startTime=1606752000000&endTime=1609430399999');//音乐日历数据
+// 搜索
+export const fetchSearchRank = () => homepageHttp.get('/toplist/detail');//搜索页面排行榜数据
+// export const fetchSearchRank = () => homepageHttp.get('/search/hot/detail');//搜索页面排行榜数据

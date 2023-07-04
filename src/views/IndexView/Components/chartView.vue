@@ -1,5 +1,5 @@
 <template>
-    <div class="scroll-item w-[85vw] p-[4vw] mr-[5vw] dark:bg-gray-600 bg-[#fff] rounded-xl shadow-inner">
+    <div class="scroll-item w-[85vw] p-[4vw] mr-[5vw] dark:bg-[#262930] bg-[#fff] rounded-xl shadow-inner">
         <li class="flex justify-between mb-5">
             <div class="font-[700] flex items-center">
                 <p class="text-[4vw]">{{ chart.uiElement.mainTitle?.title }}</p>
