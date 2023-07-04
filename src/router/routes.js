@@ -5,7 +5,7 @@ export default [
     // 路径重定向
     {
         path:'/',
-        redirect:'/playlistView',
+        redirect:'/Foo',
     },
     {
         path:'/Index/:id',
@@ -19,4 +19,9 @@ export default [
         path:'/indexView',
         component:indexView,
     },
+    {
+        path:'/Foo',
+        // 懒加载组件
+        component:()=>import('@/views/Foo.vue')
+    }
 ]
