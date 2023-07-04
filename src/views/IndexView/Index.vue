@@ -1,5 +1,6 @@
 <template>
     <div :class="{dark:switchCheckStatus}">
+        <h1 @click="increase">Foo view{{ count }}</h1>
         <div class="w-screen p-[3vw] dark:from-[#2c1a2b] dark:text-[#fff] dark:to-[#1a1c23] bg-gradient-to-b from-[#E6E6FB] to-[#f1f1f1] opacity-0.5" >
             <!-- 头部 -->
             <header class="h-[20vw] flex justify-between items-center box-border relative">
@@ -466,6 +467,7 @@
     import newSongView from './Components/newSongView.vue';
     import RecommondPlaylistItem from './Components/RecommondPlaylistItem.vue';
     import chartView from './Components/chartView.vue';
+    import store from '@/store';
     export default{
         data(){
             return {
@@ -489,6 +491,11 @@
                 switchCheckStatus:false,//控制深色模式
             }
         },
+        computed:{
+            count(){
+                return store.state.count;
+            }
+        },
         components:{menuView,newSongView,chartView,RecommondPlaylistItem,
             // songView:()=>import('./Components/songView.vue'),
             // RecommondPlaylistItem:()=>import('./Components/RecommondPlaylistItem.vue'),
@@ -508,6 +515,7 @@
             this.bs.destroy()
         },
         methods:{
+            increase:store.mutations.increase,
             init(name) {
                 this.bs = new BScroll(name, {
                     scrollX: true,

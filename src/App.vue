@@ -3,6 +3,7 @@
         <!-- 声明式导航 -->
         <!-- 完整写法 需要传参选完整写法 -->
         <router-link :to="{path:'/Index/123'}">go to Index</router-link>
+        <router-link :to="{path:'/Foo'}">go to Foo</router-link>
         <!-- 简单写法 只需简单跳转 -->
         <!-- <router-link to="/index">go to index</router-link> -->
 
