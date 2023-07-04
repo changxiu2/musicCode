@@ -1,6 +1,6 @@
 <template>
     <div class="w-[50px] h-[30px] rounded-[15px]" 
-    :class="`${ value ? 'bg-pink-600' : 'bg-gray-700' }`" 
+    :class="`${ value ? 'bg-pink-700' : 'bg-gray-600' }`" 
     @click="toggle">
         <div class="w-[30px] h-[30px] rounded-[15px] bg-white transition-all" :class="`${
             value ? 'translate-x-[20px]' : 'translate-x-0'
