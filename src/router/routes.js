@@ -23,5 +23,10 @@ export default [
         path:'/Foo',
         // 懒加载组件
         component:()=>import('@/views/Foo.vue')
+    },
+    {
+        path:'/Login',
+        // 懒加载组件
+        component:()=>import('@/views/Login.vue')
     }
 ]

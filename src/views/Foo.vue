@@ -8,6 +8,8 @@
 <script>
     import Dialog from '@/components/Dialog';
     import {mapState,mapMutations} from '@/vuex';
+    import {getUserAccount,getUserDetail} from '@/request';
+    import store from 'storejs';
     export default {
         // computed: mapState(['count','msg']),
         computed:{
@@ -24,6 +26,13 @@
                     console.log('点击了取消');
                 });
             }
+        },
+        async created(){
+            const res = await getUserAccount();
+            // console.log(res);
+            // store.set('_cookieMusic',res.data.profile);
+            const detail = await getUserDetail(res.data.profile.userId);
+            console.log(detail);
         }
     }
 </script>
