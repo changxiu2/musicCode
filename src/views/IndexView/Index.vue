@@ -578,6 +578,10 @@
             // 音乐日历
             const res = await fetchCalendar();
             this.calendar = res.data.data.calendarEvents.slice(0,2);
+
+            localStorage.setItem('local', switchCheckStatus);
+            const local = localStorage.getItem('local')
+            console.log(local);
         },
         watch:{
             userSearchKeywords:_.debounce(async function(keywords){

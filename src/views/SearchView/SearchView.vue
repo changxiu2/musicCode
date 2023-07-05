@@ -42,9 +42,9 @@
                                 <p v-if="index===0" class="text-[2.84vw] w-[12.97vw] h-[5.68vw] rounded-xl ml-[3.02vw] bg-[#F0F5F6] flex items-center justify-center mt-[1vw]">播放<Icon icon="mdi:play" /></p>
                             </div>
                             <ul class="w-[64.3vw] ">
-                                <li class="h-[13.56vw] leading-[13.56vw] font-[800] flex items-center" v-for="(item2,index2) in item.tracks.slice(0,20)">
-                                    <p v-if="index2+1<=3" class="text-[#dd4147] w-[3.95vw] text-[3.27vw]">{{ index2+1 }}</p>
-                                    <p v-if="index2+1>3" class="text-[#9a9a9d] w-[3.95vw] text-[3.27vw]">{{ index2+1 }}</p>
+                                <li class="h-[13.56vw] leading-[13.56vw] flex items-center" v-for="(item2,index2) in item.tracks.slice(0,20)">
+                                    <p v-if="index2+1<=3" class="text-[#dd4147] w-[3.95vw] text-[3.27vw] font-[800]">{{ index2+1 }}</p>
+                                    <p v-if="index2+1>3" class="text-[#9a9a9d] w-[3.95vw] text-[3.27vw] font-[800]">{{ index2+1 }}</p>
                                     <p class="ml-[5.93vw] text-[3.46vw] w-[47.74vw] overflow-hidden whitespace-nowrap text-ellipsis">{{item2.name}}</p>
                                 </li>
                             </ul>

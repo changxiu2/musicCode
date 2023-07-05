@@ -22,4 +22,5 @@ export const fetchSearchRank = () => homepageHttp.get('/toplist/detail');//搜�
 export const fetchSearchLove = () => homepageHttp.get('/search/hot/detail');//搜索页面排行榜数据
 
 // 歌单详情
-export const fethchSingDetails = (params) => http.get(`/playlist/detail?id=${params}`)
+export const fetchSingDetails = (params) => http.get(`/playlist/detail?id=${params}`)
+export const fetchSingQus = (params) => http.get(`/playlist/track/all?id=${params}`)
