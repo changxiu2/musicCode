@@ -19,4 +19,7 @@ export const fetchHomepageDragonBall = () => homepageHttp.get('/homepage/dragon/
 export const fetchCalendar = () => homepageHttp.get('/calendar?startTime=1606752000000&endTime=1609430399999');//音乐日历数据
 // 搜索
 export const fetchSearchRank = () => homepageHttp.get('/toplist/detail');//搜索页面排行榜数据
-// export const fetchSearchRank = () => homepageHttp.get('/search/hot/detail');//搜索页面排行榜数据
+export const fetchSearchLove = () => homepageHttp.get('/search/hot/detail');//搜索页面排行榜数据
+
+// 歌单详情
+export const fethchSingDetails = (params) => http.get(`/playlist/detail?id=${params}`)
