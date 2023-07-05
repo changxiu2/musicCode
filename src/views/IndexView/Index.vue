@@ -6,13 +6,11 @@
                 <header class="w-screen px-[3vw] pt-[3vw] h-[20vw] flex justify-between items-center box-border fixed top-0  left-0  z-10 bg-[#F7F8FC] dark:bg-black">
                     <icon @click.native="drawerVisible = !drawerVisible" class="z-10 w-[6vw] h-[6vw]" icon="mi:menu"/>
                     <div class="w-[75vw] relative">
-                        <router-link :to="{path:'/SearchView'}">
-                            <div class="w-[75vw] relative">
-                                <input type="text" class="dark:from-[#fff] dark:text-[#000] dark:to-[#fff] w-[100%] h-[10vw] pl-[10vw] border border-purple-200 rounded-full text-[4.47vw] outline-[pink] bg-gradient-to-l from-pink-100 to-purple-100" :placeholder="search.showKeyword" v-model="userSearchKeywords">
-                                <Icon @click.native="searchHandler(userSearchKeywords)" class="absolute w-[4.47vw] h-[4.47vw] top-[3vw] left-[3.68vw] text-[3vw] text-[#666] z-10"  icon="ri:search-line" />
-                                <icon class="absolute top-[3vw] w-[4.47vw] h-[4.47vw] right-[3.68vw]" icon="lucide:scan-line" color="#666" width="17" />
-                            </div>
-                        </router-link>
+                        <div class="w-[75vw] relative">
+                            <input @focus="searchFn" type="text" class="dark:from-[#fff] dark:text-[#000] dark:to-[#fff] w-[100%] h-[10vw] pl-[10vw] border border-purple-200 rounded-full text-[4.47vw] outline-[pink] bg-gradient-to-l from-pink-100 to-purple-100" :placeholder="search.showKeyword" v-model="userSearchKeywords">
+                            <Icon @click.native="searchHandler(userSearchKeywords)" class="absolute w-[4.47vw] h-[4.47vw] top-[3vw] left-[3.68vw] text-[3vw] text-[#666] z-10"  icon="ri:search-line" />
+                            <icon class="absolute top-[3vw] w-[4.47vw] h-[4.47vw] right-[3.68vw]" icon="lucide:scan-line" color="#666" width="17" />
+                        </div>
                     </div>
                     <icon icon="iconamoon:microphone-light" class="w-[6vw] h-[6vw]" />
                     <!-- 搜索建议 -->
@@ -519,6 +517,9 @@
             this.bs.refresh();
         },
         methods:{
+            searchFn(){
+                this.$router.push('/SearchView')
+            },
             init(name) {
                 this.bs = new BScroll(name, {
                     scrollX: true,
