@@ -8,6 +8,7 @@
     </div>
 </template>
 <script>
+    import store from 'storejs';
     export default {
         // model主要是配置v-model指令所需要使用的 属性名 和 事件名
         model:{//主要用于防止value属性被占用，input属性被占用，无法使用v-model
@@ -25,7 +26,8 @@
                 // this.$emit('updata:value',!this.value);
                 // 触发自身的input1方法
                 this.$emit('input',!this.value);
+                store.set('switch', !this.value);
             }
-        }
+        },
     }
 </script>

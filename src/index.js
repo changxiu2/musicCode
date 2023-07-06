@@ -7,6 +7,7 @@ import Drawer from '@/commponents/Drawer.vue';
 import Switch from '@/commponents/Switch.vue';
 import { Vant, Swipe, SwipeItem } from 'vant';
 import 'vant/lib/index.css';
+// import store from '@/store';
 
 Vue.use(Swipe);
 Vue.use(SwipeItem);
@@ -15,9 +16,10 @@ Vue.component('Icon', Icon);
 Vue.component('Drawer', Drawer);
 Vue.component('v-switch', Switch);
 
-new Vue({
+const app = new Vue({
     el: '#app',
     router,
+    // store,
     components: { App },
     template: '<App/>',
 });

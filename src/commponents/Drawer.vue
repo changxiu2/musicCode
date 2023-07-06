@@ -2,7 +2,7 @@
     <div @click="clickHandler" :class="{dark:switchCheckStatus}">
         <div class="dark:text-[#fff]">
             <transition :name="direction">
-            <div v-show="visible" class="w-screen bg-[#f5f5f5] dark:bg-[#2a2929] fixed z-[999] overflow-auto" :style="[drawerContentStyle,{width}]">
+            <div v-show="visible" class="w-screen bg-[#f5f5f5] dark:bg-[#2a2929] fixed z-[28] overflow-auto" :style="[drawerContentStyle,{width}]">
                 <div>
                     <slot name="header">
                         <div class="flex justify-between items-center p-4 border-b-[0.35vw] border-[#ccc]">
@@ -17,7 +17,7 @@
             </div>
         </transition>
         <!-- 蒙版 -->
-        <div v-if="visible" ref="drawerMask" class="bg-black opacity-40 fixed top-0 right-0 bottom-0 left-0 z-[998]"></div>
+        <div v-if="visible" ref="drawerMask" class="bg-black opacity-40 fixed top-0 right-0 bottom-0 left-0 z-[25]"></div>
         </div>
         
     </div>

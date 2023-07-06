@@ -1,7 +1,7 @@
 import Index from '@/views/IndexView/Index.vue';
 import SearchView from '@/views/SearchView/SearchView.vue';
-import SinglistDetailsView from '@/views/SinglistDetailsView/SinglistDetailsView.vue';
 import playlistView from '@/views/playlistView.vue';
+import SinglistDetailsView from '@/views/SinglistDetailsView/SinglistDetailsView.vue';
 // import Login from '@/views/Login.vue';
 export default [
     // 路径重定向
@@ -26,8 +26,9 @@ export default [
         path:'/SinglistDetailsView',
         component:SinglistDetailsView,
     },
-    // {
-    //     path:'/Login',
-    //     component:()=>import('@/views/Login.vue'),
-    // },
+    {
+        path:'/Login',
+        // 懒加载组件
+        component:()=>import('@/views/Login.vue'),
+    },
 ]

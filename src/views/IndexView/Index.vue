@@ -176,9 +176,9 @@
                     <template #header>
                         <div class="w-[83.89vw] flex justify-between items-center bg-white dark:bg-[#2a2929] fixed  p-[4.26vw]">
                             <div class="flex justify-between items-center">
-                                <img class="w-[6.67vw] h-[6.94vw] rounded-[50%] mr-[2.87vw]" src="http://p7.itc.cn/q_70/images03/20201109/416ac76e04e14a979db03a9f624da78f.jpeg" alt="">
+                                <img class="w-[6.67vw] h-[6.94vw] rounded-[50%] mr-[2.87vw]" src="http://pic.616pic.com/ys_img/00/58/34/XRxJ2kfP0x.jpg" alt="">
                                 <div class="flex items-center">
-                                    <span class="text-[3.5vw]">昵称</span>
+                                    <span @click="LoginFn" class="text-[3.5vw]">点击登录</span>
                                     <icon icon="ep:arrow-right-bold" class="text-[3.5vw]" />
                                 </div>
                             </div>
@@ -430,7 +430,8 @@
                                     <icon icon="ep:arrow-right-bold" color="#ccc" class="w-[4vw] h-[4vw]" />
                                 </div>
                             </div>
-                            <div class="h-[12.78vw] mb-[4.17vw] dark:bg-[#3e3d3d] bg-white rounded-xl px-[4.26vw] text-[red] text-[5vw] leading-[12.78vw] text-center">退出登录/关闭</div>
+                            <div @click="dialogFn" class="h-[12.78vw] mb-[4.17vw] dark:bg-[#3e3d3d] bg-white rounded-xl px-[4.26vw] text-[red] text-[5vw] leading-[12.78vw] text-center">退出登录/关闭</div>
+                            <!-- <div @click="dialogFn" class="h-[12.78vw] mb-[4.17vw] dark:bg-[#3e3d3d] bg-white rounded-xl px-[4.26vw] text-[red] text-[5vw] leading-[12.78vw] text-center">点击登录</div> -->
                         </div>
                     </div>
                     
@@ -452,6 +453,8 @@
                         </p>
                     </div>
                 </Drawer>
+                <!-- 退出登录弹框 -->
+                <!-- <Dialog title="警告" message="我是提示内容"></Dialog> -->
             </div>
         </div>
     </div>
@@ -459,18 +462,23 @@
 <script>
     import _ from 'lodash';
     import BScroll from '@better-scroll/core';
+    import Dialog from '@/commponents/Dialog';
+    import {mapState,mapMutations} from '@/vuex';
     import {
         fetchHomepageBlockPage,
         fetchHomepageDragonBall,
         fetchCalendar,
         fetchSearchDefault,
         fetchSearchResult,
-        fetchSearchSuggest
-    } from '@/request/index';
+        fetchSearchSuggest,
+        getUserAccount,
+        getUserDetail
+    } from '@/request';
     import menuView from './Components/menuView.vue';
     import newSongView from './Components/newSongView.vue';
     import RecommondPlaylistItem from './Components/RecommondPlaylistItem.vue';
     import chartView from './Components/chartView.vue';
+    import store from 'storejs';
     export default{
         data(){
             return {
@@ -491,7 +499,7 @@
                 drawerVisible:false,//控制左侧抽屉
                 drawerSongVisible:false,//控制下方抽屉
                 info:'',//存title
-                switchCheckStatus:false,//控制深色模式
+                switchCheckStatus:null,//控制深色模式
             }
         },
         components:{menuView,newSongView,chartView,RecommondPlaylistItem,
@@ -516,10 +524,19 @@
         updated() {
             this.bs.refresh();
         },
+        // computed:{
+        //     ...mapState(['count','msg']),
+        // }, 
         methods:{
+            // 跳转到搜索页面
             searchFn(){
                 this.$router.push('/SearchView')
             },
+            // 跳转到登录页面
+            LoginFn(){
+                this.$router.push('/Login')
+            },
+            // 滚动条插件
             init(name) {
                 this.bs = new BScroll(name, {
                     scrollX: true,
@@ -555,8 +572,22 @@
                     return playVolume;
                 }
             },
+            // ...mapMutations(['increase']),
+            dialogFn(){
+                Dialog({title:'网易云音乐',message:'确定退出当前账号吗？'})
+                .then(function () {
+                    console.log('点击了确定');
+                    this.$router.push('/Login')
+                    // LoginFn()
+                })
+                .catch(function () {
+                    console.log('点击了取消');
+                });
+            }
         },
         async created(){
+            // 深色模式
+            this.switchCheckStatus = store.get('switch');
             // 搜索
             const resSearch = await fetchSearchDefault();
             this.search = resSearch.data.data;
@@ -576,12 +607,15 @@
             // 排行榜
             this.charts = resBanner.data.data.blocks[3].creatives;
             // 音乐日历
-            const res = await fetchCalendar();
-            this.calendar = res.data.data.calendarEvents.slice(0,2);
+            const resMusic = await fetchCalendar();
+            this.calendar = resMusic.data.data.calendarEvents.slice(0,2);
 
-            localStorage.setItem('local', switchCheckStatus);
-            const local = localStorage.getItem('local')
-            console.log(local);
+            // 通过接口获取数据并存入内存中
+            const resUser = await getUserAccount();
+            // console.log(res);
+            // store.set('_cookieMusic',res.data.profile);
+            const detail = await getUserDetail(resUser.data.profile.userId);
+            console.log(detail);
         },
         watch:{
             userSearchKeywords:_.debounce(async function(keywords){

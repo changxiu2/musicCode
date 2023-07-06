@@ -22,5 +22,18 @@ export const fetchSearchRank = () => homepageHttp.get('/toplist/detail');//搜�
 export const fetchSearchLove = () => homepageHttp.get('/search/hot/detail');//搜索页面排行榜数据
 
 // 歌单详情
-export const fetchSingDetails = (params) => http.get(`/playlist/detail?id=${params}`)
-export const fetchSingQus = (params) => http.get(`/playlist/track/all?id=${params}`)
+export const fetchSingDetails = (params) => http.get(`/playlist/detail?id=${params}`);
+export const fetchSingQus = (params) => http.get(`/playlist/track/all?id=${params}`);
+
+// 二维码生成接口
+export const getQRKey = () => http.get('/login/qr/key');
+export const getQrInfo = (key,qrimg=1) => http.get('/login/qr/create',{params:{key,qrimg}});
+// 二维码检测扫码状态接口
+export const checkQrStatus = (key) => http.get('/login/qr/check',{params:{ key,timestamp:Date.now() } });
+
+// 获取账号信息
+export const getUserAccount = () => http.get('/user/account');
+// 用户详情
+export const getUserDetail = (uid) => http.get('/user/detail',{params:{uid}});
+
+
