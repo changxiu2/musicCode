@@ -1,12 +1,13 @@
 import Index from '@/views/IndexView/Index.vue';
 import SearchView from '@/views/SearchView/SearchView.vue';
-import SinglistDetailsView from '@/views/SinglistDetailsView/SinglistDetailsView.vue';
 import playlistView from '@/views/playlistView.vue';
+import SinglistDetailsView from '@/views/SinglistDetailsView/SinglistDetailsView.vue';
+// import Login from '@/views/Login.vue';
 export default [
     // 路径重定向
     {
         path:'/',
-        redirect:'/Login',
+        redirect:'/Index',
     },
     {
         // path:'/Index/:id',
@@ -27,6 +28,7 @@ export default [
     },
     {
         path:'/Login',
-        component:Login,
+        // 懒加载组件
+        component:()=>import('@/views/Login.vue'),
     },
 ]

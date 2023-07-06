@@ -1,109 +1,150 @@
 <template>
-    <div class="">
-        <div class="w-screen h-[80.07vw] pl-[3.91vw] pr-[4.09vw] bg-gradient-to-b from-[#8e5f4a] to-[#a97660]">
-            <!-- 头部 -->
-            <header class="flex h-[11.19vw] pt-[3.63vw] items-center justify-between pl-[1.24vw] mb-[6.21vw]">
-                <div class="w-[20.65vw] flex justify-between items-center">
-                    <Icon @click.native="IndexFn" class="w-[5vw] h-[5.6vw] text-white font-[800]" icon="iconoir:arrow-left" />
-                    <p class="text-white text-[4.44vw]">歌单</p>
-                </div>
-                <div class="flex w-[15.81vw] justify-between items-center">
-                    <Icon class="w-[5vw] h-[5.6vw] text-white font-[800]" icon="iconoir:search" />
-                    <Icon class="w-[5vw] h-[5.6vw] text-white font-[800]" icon="ri:more-2-fill" />
-                </div>
-            </header>
-            <!--  -->
-            <div class="h-[28.4vw] flex justify-between">
-                <div class="w-[27.77vw] h-[27.88vw] bg-red-400 relative rounded-2xl overflow-hidden">
-                    <img class="w-[27.77vw] h-[27.88vw]" :src="detailsDate.coverImgUrl" alt="">
-                    <div class='absolute top-[2vw] right-[2.5vw] font-[800] text-[#fff] flex items-center'>
-                        <Icon icon="ion:play" width="10" class='text-[#fff] w-[3vw] h-[3vw]' />
-                        <span class='font-[800] text-[2.5vw]'>{{dataTruncation(detailsDate.playCount)}}</span>
+    <div :class="{dark:switchCheckStatus}">
+        <div class="w-screen bg-gradient-to-b from-[#8C8B48] to-[#A9A95F] dark:from-[#5C5B2F] dark:to-[#6E6D3D]">
+            <div class="w-screen h-[75.07vw] pt-[15vw]">
+                <!-- 头部 -->
+                <header class="w-screen flex h-[11.19vw] bg-[#8C8B48] dark:bg-[#5C5B2F] pt-[3.63vw] pl-[5.04vw] pr-[4.09vw] fixed top-0 left-0 z-[3] items-center justify-between mb-[6.21vw]">
+                    <div class="w-[20.65vw] flex justify-between items-center">
+                        <Icon @click.native="IndexFn" class="w-[5vw] h-[5.6vw] text-white font-[800]" icon="iconoir:arrow-left" />
+                        <p class="text-white text-[4.44vw]">歌单</p>
                     </div>
-                </div>
-                <div class="w-[60.05vw]">
-                    <div class="flex justify-between items-center">
-                        <p class="w-[48.53vw] text-[4.29vw] font-[800] text-white">{{detailsDate.name}}</p>
-                        <div class="w-[5.64vw] h-[5.64vw] rounded-[50%] flex justify-center items-center" style="background: rgba(255,255,255, 0.2)">
-                            <Icon class="text-white w-[2.71vw] h-[1.69vw] opacity-[1]" icon="ep:arrow-down-bold" />
+                    <div class="flex w-[15.81vw] justify-between items-center">
+                        <Icon class="w-[5vw] h-[5.6vw] text-white font-[800]" icon="iconoir:search" />
+                        <Icon class="w-[5vw] h-[5.6vw] text-white font-[800]" icon="ri:more-2-fill" />
+                    </div>
+                </header>
+                <!-- 歌单详情 -->
+                <div class="top-[11.19vw] pl-[3.91vw] pr-[4.09vw]">
+                    <div class="h-[29.35vw] flex justify-between">
+                        <div class="w-[27.77vw] h-[29vw] rounded-xl relative overflow-hidden shadow-md -top-2">
+                            <div class="relative">
+                                <div class="w-[25.81vw] h-[27.35vw] absolute top-0 left-[1vw] rounded-2xl" style="background: rgba(255,255,255, 0.2)"></div>
+                                <img class="w-[27.77vw] h-[27.88vw] z-[2] rounded-xl absolute top-[1.3vw] left-0" :src="detailsDate.coverImgUrl" alt="">
+                            </div>
+                            <div class='absolute top-[2vw] right-[2.5vw] font-[800] text-[#fff] flex items-center'>
+                                <Icon icon="ion:play" width="10" class='text-[#fff] w-[3vw] h-[3vw]' />
+                                <span class='font-[800] text-[2.5vw]'>{{dataTruncation(detailsDate.playCount)}}</span>
+                            </div>
+                        </div>
+                        <div class="w-[60.05vw]">
+                            <div class="flex justify-between">
+                                <p class="w-[48.53vw] text-[3.4vw] font-[800] text-white">{{detailsDate.name}}</p>
+                                <div class="w-[5.64vw] h-[5.64vw] rounded-[50%] flex justify-center items-center" style="background: rgba(255,255,255, 0.2)">
+                                    <Icon class="text-white w-[3vw] h-[3vw] opacity-[1]" icon="ep:arrow-down-bold" />
+                                </div>
+                            </div>
+                            <div class="h-[6.88vw] mt-[3.05vw] flex items-center">
+                                <img class="w-[6.88vw] h-[6.88vw] rounded-[50%]" :src="detailsDate.creator.avatarUrl" alt="">
+                                <p class="ml-[2.94vw] mr-[1.24vw] text-[3.11vw] text-[#e1c1af]">{{ detailsDate.creator.nickname }}</p>
+                                <div class="h-[5.15vw] w-[12.17vw] flex items-center justify-center text-white rounded-[5vw]" style="background: rgba(255,255,255, 0.2)">
+                                    <Icon class="w-[2.49vw] h-[2.58vw] font-[800]" icon="ic:twotone-add" />
+                                    <span class="text-[2.58vw] mt-[0.5vw]">关注</span>
+                                </div>
+                            </div>
+                            <ul class="h-[6.32vw] flex mt-[1.69vw] text-white">
+                                <li v-for="item in tags" :key="item.id" class="flex justify-center items-center text-[2.82vw] px-[1.47vw] py-[0.9vw] mr-[1.69vw] rounded-[1vw] font-[800]" style="background: rgba(255,255,255, 0.2)">
+                                    <span>{{item}}</span>
+                                    <Icon icon="ep:arrow-right-bold" />
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="h-[6.88vw] mt-[3.05vw] flex items-center">
-                        <img class="w-[6.88vw] h-[6.88vw] rounded-[50%]" :src="detailsDate.creator.avatarUrl" alt="">
-                        <p class="ml-[2.94vw] mr-[1.24vw] text-[3.11vw] text-[#e1c1af]">{{ detailsDate.creator.nickname }}</p>
-                        <div class="h-[5.15vw] w-[12.17vw] flex items-center justify-center text-white rounded-[5vw]" style="background: rgba(255,255,255, 0.2)">
-                            <Icon class="w-[2.49vw] h-[2.58vw] font-[800]" icon="ic:twotone-add" />
-                            <span class="text-[2.58vw] mt-[0.5vw]">关注</span>
-                        </div>
+                    <div class="mt-[3.82vw] mb-[5.6vw] text-[3.39vw] flex items-center text-[#e2b2ad]">
+                        <p class="mr-[2.13vw] overflow-hidden whitespace-nowrap text-ellipsis">{{detailsDate.description}}</p>
+                        <Icon class="w-[3.49vw] h-[3.49vw]" icon="ep:arrow-right-bold" />
                     </div>
-                    <ul class="h-[6.32vw] flex mt-[1.69vw] text-white">
-                        <li v-for="item in tags" :key="item.id" class="flex justify-center items-center text-[2.82vw] px-[1.47vw] py-[0.9vw] mr-[1.69vw] rounded-[1vw] font-[800]" style="background: rgba(255,255,255, 0.2)">
-                            <span>{{item}}</span>
-                            <Icon icon="ep:arrow-right-bold" />
+                    <!-- 分享收藏评论 -->
+                    <ul class="flex justify-around items-center text-white font-[800] text-[2.84vw]">
+                        <li class="w-[28.6vw] h-[10.12vw] flex items-center justify-center rounded-[6vw]" style="background: rgba(255,255,255, 0.2)">
+                            <Icon class="w-[5.08vw] h-[5.19vw]" icon="ion:arrow-redo" />
+                            <p class="ml-[2.04vw]">{{detailsDate.shareCount}}</p>
+                        </li>
+                        <li class="w-[28.6vw] h-[10.12vw] flex items-center justify-center rounded-[6vw]" style="background: rgba(255,255,255, 0.2)">
+                            <Icon class="w-[5.08vw] h-[5.19vw]" icon="ant-design:message-filled" />
+                            <p class="ml-[2.04vw]">{{detailsDate.commentCount}}</p>
+                        </li>
+                        <li class="w-[28.6vw] h-[10.12vw] flex items-center justify-center rounded-[6vw] bg-[#f9393f]">
+                            <Icon class="w-[5.08vw] h-[5.19vw]" icon="material-symbols:add-box" />
+                            <p class="ml-[2.04vw]">{{detailsDate.subscribedCount}}</p>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="mt-[3.82vw] mb-[5.6vw] text-[3.39vw] flex items-center text-[#e2b2ad]">
-                <p class="mr-[2.13vw] overflow-hidden whitespace-nowrap text-ellipsis">{{detailsDate.description}}</p>
-                <Icon class="w-[2.49vw] h-[2.49vw]" icon="ep:arrow-right-bold" />
+            <!-- 歌曲列表 -->
+            <div class="w-screen dark:text-white">
+                <div class="w-screen bg-[#8C8B48] dark:bg-opacity-0 sticky top-[10.4vw]">
+                    <!-- bg-gradient-to-b from-[#F7F7EF] to-[#FFFFFD] -->
+                    <header class="w-screen h-[10.66vw] relative top-[1vw] bg-white dark:bg-[#7D7C4E] pl-[3.11vw] pr-[4.88vw] flex items-center justify-between rounded-t-[4vw]">
+                        <div class="flex">
+                            <div class="w-[6.22vw] h-[6.22vw] rounded-[50%] bg-[#ff3a3c] flex items-center justify-center mr-[2.75vw]">
+                                <Icon class="w-[4vw] h-[4vw] ml-[0.6vw] text-white" icon="ion:play" />
+                            </div>
+                            <div class="w-[27.62vw] flex items-center">
+                                <p class="text-[3.91vw] font-[800]">播放全部</p>
+                                <p class="text-[3vw] ml-[1.78vw] mt-[1.2vw]">({{ detailsDate.trackIds.length }})</p>
+                            </div>
+                        </div>
+                        <div class="flex font-[800]">
+                            <Icon class="w-[4.44vw] h-[4.53vw] mr-[4.88vw]" icon="circum:save-down-1" />
+                            <Icon class="w-[3.91vw] h-[4.53vw]" icon="solar:list-down-minimalistic-bold" />
+                        </div>
+                    </header>
+                </div>
+                <ul class="pl-[3.11vw] pr-[4.88vw] mb-[5vw] bg-white dark:bg-white dark:bg-opacity-[0.1] rounded-b-[4vw]">
+                    <li v-for="(item,index) in singDate" :key="item.id" class="h-[17.94vw] flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="text-[#999898] font-[800] w-[5.3vw] text-center mr-[2vw] text-[3.02vw]">{{ index+1 }}</span>
+                            <div class="flex flex-col w-[63.04vw]">
+                                <p class="text-[4.09vw] overflow-hidden whitespace-nowrap text-ellipsis">{{ item.name }}</p>
+                                <div>
+                                    <div class="text-[2.93vw] text-[#908f97] dark:text-[#BABAA2] flex">
+                                        <p v-for="(item2,index) in item.ar" :key="item2.id">
+                                            <span v-if="index>0">{{ item2.name }}\</span>
+                                            <span v-else>{{ item2.name }}</span>
+                                        </p>
+                                        <span class="mx-[0.5vw]">-</span>
+                                        <p>{{ item.al.name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <Icon class="w-[4.44vw] h-[4.17vw] mr-[4.88vw] text-[#b1b0b0]" icon="jam:play-square" color="#ccc" />
+                            <Icon class="w-[3.91vw] h-[4.17vw] text-[#b1b0b0]" icon="ri:more-2-fill" color="#ccc" />
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <!-- 分享收藏评论 -->
-            <ul class="flex justify-around items-center text-white font-[800] text-[2.84vw]">
-                <li class="w-[28.6vw] h-[10.12vw] flex items-center justify-center rounded-[6vw]" style="background: rgba(255,255,255, 0.2)">
-                    <Icon class="w-[5.08vw] h-[5.19vw]" icon="ion:arrow-redo" />
-                    <p class="ml-[2.04vw]">{{detailsDate.shareCount}}</p>
-                </li>
-                <li class="w-[28.6vw] h-[10.12vw] flex items-center justify-center rounded-[6vw]" style="background: rgba(255,255,255, 0.2)">
-                    <Icon class="w-[5.08vw] h-[5.19vw]" icon="ant-design:message-filled" />
-                    <p class="ml-[2.04vw]">{{detailsDate.commentCount}}</p>
-                </li>
-                <li class="w-[28.6vw] h-[10.12vw] flex items-center justify-center rounded-[6vw] bg-[#f9393f]">
-                    <Icon class="w-[5.08vw] h-[5.19vw]" icon="material-symbols:add-box" />
-                    <p class="ml-[2.04vw]">{{detailsDate.subscribedCount}}</p>
-                </li>
-            </ul>
         </div>
-        <div class="w-screen bg-red-300 ">
-            <header class="w-screen h-[10.66vw] pl-[3.11vw] pr-[4.88vw] flex items-center justify-between rounded-t-[3vw] relative top-[-3.02vw] left-0 bg-[#e6e8e0]">
-                <div class="flex">
-                    <div class="w-[6.22vw] h-[6.22vw] rounded-[50%] bg-[#ff3a3c] flex items-center justify-center mr-[2.75vw]">
-                        <Icon class="w-[2.31vw] h-[2.49vw] text-white" icon="ion:play" />
-                    </div>
-                    <div class="w-[27.62vw] flex justify-between items-center">
-                        <p class="text-[3.91vw] font-[800]">(123)</p>
-                        <p class="text-[3vw]">(123)</p>
-                    </div>
-                </div>
-                <div class="flex">
-                    <Icon icon="circum:save-down-1" />
-                    <Icon icon="solar:list-down-minimalistic-bold" />
-                </div>
-            </header>
-            <ul class="mt-[11vw]">
-                <li class="h-[21.94vw] flex items-center justify-between"></li>
-            </ul>
-        </div>
+        
     </div>
 </template>
 <script>
-    import {fethchSingDetails} from '@/request/index';
+    import store from 'storejs';
+    import {fetchSingDetails, fetchSingQus} from '@/request/index';
     export default {
         data(){
             return {
+                switchCheckStatus:null,//深色模式
                 detailsDate:{},
                 tags:[],//标签
+                singDate:{},
             }
         },
         async created(){
+            // 深色模式
+            this.switchCheckStatus = store.get('switch');
+            // 头部数据
             // console.log(this.$route);
-            const resDetails = await fethchSingDetails(this.$route.query.id);
+            const resDetails = await fetchSingDetails(this.$route.query.id);
             this.detailsDate = resDetails.data.playlist;
-            // this.tags = resDetails.data.playlist.algTags
-            this.tags = resDetails.data.playlist.tags
-            let data= resDetails.data.playlist
+            this.tags = resDetails.data.playlist.algTags;
+            // this.tags = resDetails.data.playlist.tags
+            // 歌曲列表数据
+            const resSingDates = await fetchSingQus(this.$route.query.id);
+            this.singDate = resSingDates.data.songs;
+            let data = resSingDates.data;
             console.log(data);
-            // console.log(this.detailsDate);
         },
         methods:{
             // 返回首页
