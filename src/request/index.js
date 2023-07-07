@@ -1,5 +1,6 @@
 // 所有的请求都定义在这个位置
 import axios from "axios";
+import store from 'storejs';
 
 const http = axios.create({
     baseURL:'https://netease-cloud-music-api-five-roan-88.vercel.app',
@@ -7,6 +8,16 @@ const http = axios.create({
 const homepageHttp = axios.create({
     baseURL:'https://netease-cloud-music-c2c1ys55f-cc-0820.vercel.app',
 })
+
+
+// 添加请求拦截器
+http.interceptors.request.use(function(config){
+    const cookie = store.get('__m__cookie') ?? "";
+    config.params = config.params || {};
+    config.params.cookie = cookie;
+    return config;
+})
+
 
 export const fetchPlaylistHot = () => http.get('/playlist/hot');
 export const fetchPlaylists = (cat) => http.get('/top/playlist',{ params:{cat} });
@@ -24,6 +35,9 @@ export const fetchSearchLove = () => homepageHttp.get('/search/hot/detail');//�
 // 歌单详情
 export const fetchSingDetails = (params) => http.get(`/playlist/detail?id=${params}`);
 export const fetchSingQus = (params) => http.get(`/playlist/track/all?id=${params}`);
+// 歌单详情小轮播数据
+export const musicSlider = (params) => http.get(`related/playlist?id=${params}`);
+
 
 // 二维码生成接口
 export const getQRKey = () => http.get('/login/qr/key');
