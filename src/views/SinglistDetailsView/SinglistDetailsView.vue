@@ -1,7 +1,7 @@
 <template>
     <div :class="{dark:switchCheckStatus}">
         <div class="w-screen bg-gradient-to-b from-[#8C8B48] to-[#A9A95F] dark:from-[#5C5B2F] dark:to-[#6E6D3D]">
-            <div class="w-screen h-[75.07vw] pt-[15vw]">
+            <div class="w-screen pt-[15vw] pb-[6vw]">
                 <!-- 头部 -->
                 <header class="w-screen flex h-[11.19vw] bg-[#8C8B48] dark:bg-[#5C5B2F] pt-[3.63vw] pl-[5.04vw] pr-[4.09vw] fixed top-0 left-0 z-[3] items-center justify-between mb-[6.21vw]">
                     <div class="w-[20.65vw] flex justify-between items-center">
@@ -15,43 +15,73 @@
                 </header>
                 <!-- 歌单详情 -->
                 <div class="top-[11.19vw] pl-[3.91vw] pr-[4.09vw]">
-                    <div class="h-[29.35vw] flex justify-between">
-                        <div class="w-[27.77vw] h-[29vw] rounded-xl relative overflow-hidden shadow-md -top-2">
-                            <div class="relative">
-                                <div class="w-[25.81vw] h-[27.35vw] absolute top-0 left-[1vw] rounded-2xl" style="background: rgba(255,255,255, 0.2)"></div>
-                                <img class="w-[27.77vw] h-[27.88vw] z-[2] rounded-xl absolute top-[1.3vw] left-0" :src="detailsDate.coverImgUrl" alt="">
+                    <div v-if="terent">
+                        <div class="h-[29.35vw] flex justify-between">
+                            <div class="w-[27.77vw] h-[29vw] rounded-xl relative overflow-hidden shadow-md -top-2">
+                                <div class="relative">
+                                    <div class="w-[25.81vw] h-[27.35vw] absolute top-0 left-[1vw] rounded-2xl" style="background: rgba(255,255,255, 0.2)"></div>
+                                    <img class="w-[27.77vw] h-[27.88vw] z-[2] rounded-xl absolute top-[1.3vw] left-0" :src="detailsDate.coverImgUrl" alt="">
+                                </div>
+                                <div class='absolute top-[2vw] right-[2.5vw] font-[800] text-[#fff] flex items-center'>
+                                    <Icon icon="ion:play" width="10" class='text-[#fff] w-[3vw] h-[3vw]' />
+                                    <span class='font-[800] text-[2.5vw]'>{{dataTruncation(detailsDate.playCount)}}</span>
+                                </div>
                             </div>
-                            <div class='absolute top-[2vw] right-[2.5vw] font-[800] text-[#fff] flex items-center'>
-                                <Icon icon="ion:play" width="10" class='text-[#fff] w-[3vw] h-[3vw]' />
-                                <span class='font-[800] text-[2.5vw]'>{{dataTruncation(detailsDate.playCount)}}</span>
+                            <div class="w-[60.05vw]">
+                                <div class="flex justify-between">
+                                    <p class="w-[48.53vw] text-[3.4vw] font-[800] text-white">{{detailsDate.name}}</p>
+                                    <div @click="lb" class="w-[5.64vw] h-[5.64vw] rounded-[50%] flex justify-center items-center" style="background: rgba(255,255,255, 0.2)">
+                                        <Icon class="text-white w-[3vw] h-[3vw] opacity-[1]" icon="ep:arrow-down-bold" />
+                                    </div>
+                                </div>
+                                <div class="h-[6.88vw] mt-[3.05vw] flex items-center">
+                                    <img class="w-[6.88vw] h-[6.88vw] rounded-[50%]" :src="detailsDate.creator.avatarUrl" alt="">
+                                    <p class="ml-[2.94vw] mr-[1.24vw] text-[3.11vw] text-[#e1c1af]">{{ detailsDate.creator.nickname }}</p>
+                                    <div class="h-[5.15vw] w-[12.17vw] flex items-center justify-center text-white rounded-[5vw]" style="background: rgba(255,255,255, 0.2)">
+                                        <Icon class="w-[2.49vw] h-[2.58vw] font-[800]" icon="ic:twotone-add" />
+                                        <span class="text-[2.58vw] mt-[0.5vw]">关注</span>
+                                    </div>
+                                </div>
+                                <ul class="h-[6.32vw] flex mt-[1.69vw] text-white">
+                                    <li v-for="item in tags" :key="item.id" class="flex justify-center items-center text-[2.82vw] px-[1.47vw] py-[0.9vw] mr-[1.69vw] rounded-[1vw] font-[800]" style="background: rgba(255,255,255, 0.2)">
+                                        <span>{{item}}</span>
+                                        <Icon icon="ep:arrow-right-bold" />
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="w-[60.05vw]">
-                            <div class="flex justify-between">
-                                <p class="w-[48.53vw] text-[3.4vw] font-[800] text-white">{{detailsDate.name}}</p>
-                                <div class="w-[5.64vw] h-[5.64vw] rounded-[50%] flex justify-center items-center" style="background: rgba(255,255,255, 0.2)">
-                                    <Icon class="text-white w-[3vw] h-[3vw] opacity-[1]" icon="ep:arrow-down-bold" />
-                                </div>
-                            </div>
-                            <div class="h-[6.88vw] mt-[3.05vw] flex items-center">
-                                <img class="w-[6.88vw] h-[6.88vw] rounded-[50%]" :src="detailsDate.creator.avatarUrl" alt="">
-                                <p class="ml-[2.94vw] mr-[1.24vw] text-[3.11vw] text-[#e1c1af]">{{ detailsDate.creator.nickname }}</p>
-                                <div class="h-[5.15vw] w-[12.17vw] flex items-center justify-center text-white rounded-[5vw]" style="background: rgba(255,255,255, 0.2)">
-                                    <Icon class="w-[2.49vw] h-[2.58vw] font-[800]" icon="ic:twotone-add" />
-                                    <span class="text-[2.58vw] mt-[0.5vw]">关注</span>
-                                </div>
-                            </div>
-                            <ul class="h-[6.32vw] flex mt-[1.69vw] text-white">
-                                <li v-for="item in tags" :key="item.id" class="flex justify-center items-center text-[2.82vw] px-[1.47vw] py-[0.9vw] mr-[1.69vw] rounded-[1vw] font-[800]" style="background: rgba(255,255,255, 0.2)">
-                                    <span>{{item}}</span>
-                                    <Icon icon="ep:arrow-right-bold" />
-                                </li>
-                            </ul>
+                        <div class="mt-[3.82vw] mb-[5.6vw] text-[3.39vw] flex items-center text-[#e2b2ad]">
+                            <p class="mr-[2.13vw] overflow-hidden whitespace-nowrap text-ellipsis">{{detailsDate.description}}</p>
+                            <Icon class="w-[8.49vw] h-[3.49vw]" icon="ep:arrow-right-bold" />
                         </div>
                     </div>
-                    <div class="mt-[3.82vw] mb-[5.6vw] text-[3.39vw] flex items-center text-[#e2b2ad]">
-                        <p class="mr-[2.13vw] overflow-hidden whitespace-nowrap text-ellipsis">{{detailsDate.description}}</p>
-                        <Icon class="w-[3.49vw] h-[3.49vw]" icon="ep:arrow-right-bold" />
+                    <div v-if="display">
+                        <div class="flex justify-between mb-[2.82vw]">
+                            <p class="text-[3.5vw] text-[#dbcea3]">喜欢这个歌单的用户也听了</p>
+                            <span @click="lb1" class="w-[5.64vw] h-[5.64vw] rounded-[50%] flex justify-center items-center" style="background: rgba(255,255,255, 0.2)">
+                                <Icon icon="ep:arrow-up"  class="text-white w-[3vw] h-[3vw] opacity-[1]"  />
+                            </span>
+                        </div>
+                        <div class="scroll-wrapper overflow-auto text-white">
+                            <div class="scroll-content flex justify-around w-[150vw]">
+                                <div v-for="item in musicBanner" :key="item.tom" class="w-[28vw] scroll-item ">
+                                    <!-- <img :src="item.coverImgUrl" alt="" class="w-[28vw] h-[28vw] rounded-[4vw]">
+                                    <p class=" line-clamp-2 text-[#fff] text-[2vw] mt-[2vw]">{{ item.name }}</p> -->
+                                    <div class="h-[31.38vw] mr-[2.5vw]">
+                                        <div class="relative">
+                                            <div class="w-[25.81vw] h-[27.35vw] absolute top-0 left-[1vw] rounded-2xl" style="background: rgba(255,255,255, 0.2)"></div>
+                                            <img class="w-[27.65vw] h-[27.65vw] z-[2] rounded-xl absolute top-[1.3vw] left-0" :src="item.coverImgUrl" alt="">
+                                        </div>
+                                        <!-- <div class='absolute top-[2vw] right-[2.5vw] font-[800] text-[#fff] flex items-center'>
+                                            <Icon icon="ion:play" width="10" class='text-[#fff] w-[3vw] h-[3vw]' />
+                                            <span class='font-[800] text-[2.5vw]'>{{dataTruncation(source.resources[0].resourceExtInfo?.playCount)}}</span>
+                                        </div> -->
+                                    </div>   
+                                    <p class="text-[3.16vw]">{{item.name}}</p>
+                                </div>
+                            </div>
+                         
+                        </div>
                     </div>
                     <!-- 分享收藏评论 -->
                     <ul class="flex justify-around items-center text-white font-[800] text-[2.84vw]">
@@ -121,14 +151,17 @@
 </template>
 <script>
     import store from 'storejs';
-    import {fetchSingDetails, fetchSingQus} from '@/request/index';
+    import {fetchSingDetails, fetchSingQus,musicSlider} from '@/request/index';
     export default {
         data(){
             return {
                 switchCheckStatus:null,//深色模式
-                detailsDate:{},
+                detailsDate:{},//头部歌单信息数据
                 tags:[],//标签
-                singDate:{},
+                singDate:{},//歌单歌曲数据
+                musicBanner:[],//歌单类似推荐数据
+                terent:true,
+                display:false,
             }
         },
         async created(){
@@ -143,8 +176,10 @@
             // 歌曲列表数据
             const resSingDates = await fetchSingQus(this.$route.query.id);
             this.singDate = resSingDates.data.songs;
-            let data = resSingDates.data;
-            console.log(data);
+            // 小轮播数据
+            const resMinBanner = await musicSlider(this.$route.query.id)
+            this.musicBanner = resMinBanner.data.playlists
+            console.log(this.musicBanner);
         },
         methods:{
             // 返回首页
@@ -159,6 +194,14 @@
                 } else {
                     return playVolume;
                 }
+            },
+            lb(){
+                this.terent = !this.terent
+                this.display = !this.display
+            },
+            lb1(){
+                this.terent = !this.terent
+                this.display = !this.display
             },
         }
 

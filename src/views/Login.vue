@@ -15,7 +15,7 @@
             <img class="w-[100%] h-[7.1vw] mb-[9.66vw]" src="/static/logo.fill.svg" alt="">
             <div class="w-[45vw] h-[45vw] relative">
                 <img class="w-[45vw] h-[45vw]" :src="qrcode" alt="">
-                <div class="w-[37vw] h-[37vw] absolute top-[4vw] left-[4vw] bg-gray-300 bg-opacity-[0.7] flex justify-center items-center">
+                <div class="w-[38vw] h-[37vw] absolute top-[4vw] left-[3.6vw] bg-gray-300 bg-opacity-[0.7] flex justify-center items-center">
                     <div @click.native="LoginFn" class="w-[21vw] h-[7.61vw] flex items-center justify-center text-[3.08vw] text-white rounded-[5vw] bg-gradient-to-r from-[#fe5934] to-[#f01568]">点击刷新</div>
                 </div>
             </div>
@@ -64,12 +64,12 @@
                         // alert('此二维码已过期，请刷新后重试');
                         clearInterval(timer);
                     }else if(res.data.code === 803){
-                        clearInterval(timer);
                         // console.log(res.data.cookie);
                         store.set('__m__cookie',res.data.cookie)
-                        // this.$route.push('/Index');
-                    //     const user = await getUserAccount();
-                    //     console.log('用户详情',user.data);
+                        this.$router.push('/Index');
+                        clearInterval(timer);
+                        // const user = await getUserAccount();
+                        // console.log('用户详情',user.data);
 
                     //     store.set('__m__User',user.data);//存用户信息
                     //     const userData = await getUserDetail(user.data.account.id);
