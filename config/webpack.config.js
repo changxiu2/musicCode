@@ -39,6 +39,12 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
     ],
   },
   mode: process.env.NODE_ENV,
@@ -47,6 +53,7 @@ module.exports = {
       vue: 'vue/dist/vue.esm.js',
       '@': path.resolve(__dirname, '../src'),
     },
+    extensions:['.js','.json','.jsx'],
   },
   externals: {
     vue: 'Vue',

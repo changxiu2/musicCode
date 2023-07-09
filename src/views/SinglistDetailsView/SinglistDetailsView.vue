@@ -58,12 +58,12 @@
                     <div v-if="display">
                         <div class="flex justify-between mb-[2.82vw]">
                             <p class="text-[3.5vw] text-[#dbcea3]">喜欢这个歌单的用户也听了</p>
-                            <span @click="lb1" class="w-[5.64vw] h-[5.64vw] rounded-[50%] flex justify-center items-center" style="background: rgba(255,255,255, 0.2)">
+                            <span @click="lb" class="w-[5.64vw] h-[5.64vw] rounded-[50%] flex justify-center items-center" style="background: rgba(255,255,255, 0.2)">
                                 <Icon icon="ep:arrow-up"  class="text-white w-[3vw] h-[3vw] opacity-[1]"  />
                             </span>
                         </div>
-                        <div class="scroll-wrapper overflow-auto text-white">
-                            <div class="scroll-content flex justify-around w-[150vw]">
+                        <div class="scroll-wrapper overflow-hidden text-white">
+                            <div class="w-[150vw] scroll-content flex justify-around">
                                 <div v-for="item in musicBanner" :key="item.tom" class="w-[28vw] scroll-item ">
                                     <!-- <img :src="item.coverImgUrl" alt="" class="w-[28vw] h-[28vw] rounded-[4vw]">
                                     <p class=" line-clamp-2 text-[#fff] text-[2vw] mt-[2vw]">{{ item.name }}</p> -->
@@ -179,7 +179,7 @@
             // 小轮播数据
             const resMinBanner = await musicSlider(this.$route.query.id)
             this.musicBanner = resMinBanner.data.playlists
-            console.log(this.musicBanner);
+            // console.log(this.musicBanner);
         },
         methods:{
             // 返回首页
@@ -198,11 +198,7 @@
             lb(){
                 this.terent = !this.terent
                 this.display = !this.display
-            },
-            lb1(){
-                this.terent = !this.terent
-                this.display = !this.display
-            },
+            }
         }
 
     }

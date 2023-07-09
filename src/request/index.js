@@ -49,5 +49,8 @@ export const checkQrStatus = (key) => http.get('/login/qr/check',{params:{ key,t
 export const getUserAccount = () => http.get('/user/account');
 // 用户详情
 export const getUserDetail = (uid) => http.get('/user/detail',{params:{uid}});
-
+// 收藏歌单与创建的歌单数据
+export const getUserPlaylist = (uid) => http.get('/user/playlist', { params: { uid } });
+// 我的评论
+export const getUserComment = (uid) => http.get('/user/comment/history',{params: { uid } })
 
