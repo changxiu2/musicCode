@@ -176,11 +176,11 @@
                     <template #header>
                         <div class="w-[83.89vw] flex justify-between items-center bg-white dark:bg-[#2a2929] fixed  p-[4.26vw]">
                             <div class="flex justify-between items-center">
-                                <img v-if="userImg===''" class="w-[6.67vw] h-[6.94vw] rounded-[50%] mr-[2.87vw]" src="http://pic.616pic.com/ys_img/00/58/34/XRxJ2kfP0x.jpg" alt="">
-                                <img v-else class="w-[6.67vw] h-[6.94vw] rounded-[50%] mr-[2.87vw]" :src="userImg" alt="">
+                                <img v-if="userId===''" class="w-[6.67vw] h-[6.94vw] rounded-[50%] mr-[2.87vw]" src="http://pic.616pic.com/ys_img/00/58/34/XRxJ2kfP0x.jpg" alt="">
+                                <img v-else class="w-[6.67vw] h-[6.94vw] rounded-[50%] mr-[2.87vw]" :src="user.avatarUrl" alt="">
                                 <div class="flex items-center">
-                                    <span v-if="userId===''" @click="LoginFn" class="text-[3.5vw]">点击登录</span>
-                                    <span v-else @click="LoginFn" class="text-[3.5vw]">{{userId}}</span>
+                                    <span v-if="userId===''" @click="$router.push('/Login')" class="text-[3.5vw]">点击登录</span>
+                                    <span v-else @click="$router.push('/User')" class="text-[3.5vw]">{{user.nickname}}</span>
                                     <icon icon="ep:arrow-right-bold" class="text-[3.5vw]" />
                                 </div>
                             </div>
@@ -433,7 +433,7 @@
                                 </div>
                             </div>
                             <div v-if="userId !== ''" @click="dialogFn" class="h-[12.78vw] mb-[4.17vw] dark:bg-[#3e3d3d] bg-white rounded-xl px-[4.26vw] text-[red] text-[5vw] leading-[12.78vw] text-center">退出登录/关闭</div>
-                            <div v-else @click="LoginFn" class="h-[12.78vw] mb-[4.17vw] dark:bg-[#3e3d3d] bg-white rounded-xl px-[4.26vw] text-[red] text-[5vw] leading-[12.78vw] text-center">立即登录</div>
+                            <div v-else @click="$router.push('/Login')" class="h-[12.78vw] mb-[4.17vw] dark:bg-[#3e3d3d] bg-white rounded-xl px-[4.26vw] text-[red] text-[5vw] leading-[12.78vw] text-center">立即登录</div>
                             <!-- <div @click="dialogFn" class="h-[12.78vw] mb-[4.17vw] dark:bg-[#3e3d3d] bg-white rounded-xl px-[4.26vw] text-[red] text-[5vw] leading-[12.78vw] text-center">点击登录</div> -->
                         </div>
                     </div>
@@ -475,7 +475,7 @@
         fetchSearchResult,
         fetchSearchSuggest,
         getUserAccount,
-        getUserDetail
+        getUserDetail,
     } from '@/request';
     import menuView from './Components/menuView.vue';
     import newSongView from './Components/newSongView.vue';
@@ -487,7 +487,6 @@
             return {
                 user:{},//扫码后信息
                 userId:'',//id
-                userImg:'',//头像
                 bannerList:[],//banner数据
                 menuList:[],//菜单数据
                 songItem:[],//推荐歌单数据
@@ -538,10 +537,6 @@
             searchFn(){
                 this.$router.push('/SearchView')
             },
-            // 跳转到登录页面
-            LoginFn(){
-                this.$router.push('/Login')
-            },
             // 滚动条插件
             init(name) {
                 this.bs = new BScroll(name, {
@@ -582,7 +577,7 @@
             dialogFn(){
                 Dialog({title:'网易云音乐',message:'确定退出当前账号吗？'})
                 .then(() => {
-                    console.log('点击了确定');
+                    // console.log('点击了确定');
                     store.remove('__m__cookie');
                     store.remove('_cookieMusic');
                     this.$router.push('/Login');
@@ -598,15 +593,15 @@
             // 通过接口获取数据并存入内存中
             const resUser = await getUserAccount();
             // console.log(resUser);
-            store.set('_cookieMusic',resUser.data.profile);
             const detail = await getUserDetail(resUser.data.profile.userId);
+            store.set('_cookieMusic',detail.data);
             console.log(detail);
             // id信息
-            this.user = store.get('_cookieMusic');
-            console.log(this.user);
+            this.user = store.get('_cookieMusic').profile;
+            // console.log(this.user);
             this.userId = this.user.nickname;
-            this.userImg = this.user.avatarUrl;
-            console.log(this.userImg);
+            // this.userImg = this.user.avatarUrl;
+            // console.log(this.userImg);
             // 搜索
             const resSearch = await fetchSearchDefault();
             this.search = resSearch.data.data;
@@ -628,8 +623,6 @@
             // 音乐日历
             const resMusic = await fetchCalendar();
             this.calendar = resMusic.data.data.calendarEvents.slice(0,2);
-
-            
         },
         watch:{
             userSearchKeywords:_.debounce(async function(keywords){
