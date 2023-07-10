@@ -13,33 +13,39 @@ module.exports = {
     },
     module: {
         rules: [
-        {
-            test: /\.template$/,
-            use: {
-            loader: path.resolve(__dirname, './loaders/template.js'),
+            {
+                test: /\.template$/,
+                use: {
+                loader: path.resolve(__dirname, './loaders/template.js'),
+                },
             },
-        },
-        {
-            test: /\.css$/,
-            use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
-        },
-        {
-            test: /\.less$/,
-            use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader',
-            'postcss-loader',
-            'less-loader',
-            ],
-        },
-        {
-            test: /\.(woff | eot | ttf | otf | svg)$/,
-            type: 'asset/resource',
-        },
-        {
-            test: /\.vue$/,
-            loader: 'vue-loader'
-        },
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+            },
+            {
+                test: /\.less$/,
+                use: [
+                MiniCssExtractPlugin.loader,
+                'css-loader',
+                'postcss-loader',
+                'less-loader',
+                ],
+            },
+            {
+                test: /\.(woff | eot | ttf | otf | svg)$/,
+                type: 'asset/resource',
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+            {
+                test: /\.jsx?$/,
+                use: {
+                    loader: 'babel-loader',
+                }
+            }
         ],
     },
     mode: process.env.NODE_ENV,
@@ -48,10 +54,11 @@ module.exports = {
         vue: 'vue/dist/vue.esm.js',
         '@': path.resolve(__dirname, '../src'),
         },
+        extensions:['.js','.json','.jsx'],
     },
-    externals: {
-        vue: 'Vue',
-    },
+    // externals: {
+    //     vue: 'Vue',
+    // },
     devServer: {
             open: true,
             // 配置前端请求代理

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+window.V = Vue;
 import './index.css';
 import { Icon } from '@iconify/vue2';
 import App from '@/App.vue';
@@ -34,13 +35,16 @@ import router from '@/router';
 //         },
 //     ]
 // })
-import Drawer from '@/components/Drawer.vue';
-import Switch from '@/components/Switch.vue';
-import {Swipe, SwipeItem } from 'vant';
+// import Drawer from '@/components/Drawer.vue';
+// import Switch from '@/components/Switch.vue';
+import { Drawer,Switch } from '@/components';
+import { Swipe, SwipeItem, Button, Popup, Area } from 'vant';
 import 'vant/lib/index.css';
 import store from '@/store';
-Vue.use(Swipe);
-Vue.use(SwipeItem);
+import formateTime from '@/utils/formateTime';
+
+
+Vue.use(Swipe).use(SwipeItem).use(Button).use(Popup).use(Area).use(formateTime);
 Vue.component('Icon', Icon);
 Vue.component('Drawer', Drawer);
 Vue.component('v-switch', Switch);

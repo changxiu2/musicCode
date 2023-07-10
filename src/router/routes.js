@@ -5,7 +5,7 @@ export default [
     // 路径重定向
     {
         path:'/',
-        redirect:'/Foo',
+        redirect:'/0708',
     },
     {
         path:'/Index/:id',
@@ -28,5 +28,25 @@ export default [
         path:'/Login',
         // 懒加载组件
         component:()=>import('@/views/Login.vue')
+    },
+    {
+        path:'/Rest',
+        // 懒加载组件,需要时再加载
+        component:()=>import(/* webpackChunkName:'rest'*/'@/views/Rest.vue')
+    },
+    {
+        path:'/JSX',
+        // 懒加载组件,需要时再加载
+        component:()=>import('@/views/JSX.jsx')
+    },
+    {
+        path:'/0708',
+        // 懒加载组件,需要时再加载
+        component:()=>import('@/views/feat-0708.vue')
+    },
+    {
+        path:'/0708jsx',
+        // 懒加载组件,需要时再加载
+        component:()=>import('@/views/feat-0708.jsx')
     }
 ]
