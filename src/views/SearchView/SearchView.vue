@@ -1,6 +1,6 @@
 <template>
     <div :class="{dark:switchCheckStatus}">
-        <div class="w-screen h-[100vh] bg-[#F7F8FC] dark:text-[#fff] dark:bg-[#181B22]">
+        <div class="w-screen bg-[#F7F8FC] pb-[5vw] dark:text-[#fff] dark:bg-[#181B22]">
             <div class="fixed top-0 left-0 bg-[#F7F8FC] dark:bg-[#181B22] z-10 pb-[5vw]">
                 <!-- 头部 -->
                 <header class="h-[20vw] flex justify-between items-center box-border relative px-[3vw]">

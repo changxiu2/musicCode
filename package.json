@@ -12,13 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@better-scroll/core": "^2.5.1",
     "@vant/area-data": "^1.4.1",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",
     "@vue/babel-preset-jsx": "^1.4.0",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
     "eslint-import-resolver-webpack": "^0.13.2",
+    "howler": "^2.2.3",
     "jquery": "^3.7.0",
     "lodash": "^4.17.21",
     "storejs": "^2.0.5",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.8",
     "@babel/preset-env": "^7.22.7",
+    "@better-scroll/core": "^2.5.1",
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
     "@iconify/json": "^2.2.83",

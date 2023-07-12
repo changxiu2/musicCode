@@ -1,14 +1,15 @@
 <template>
     <div class="w-screen h-screen">
-        <!-- 声明式导航 -->
-        <!-- 完整写法 需要传参选完整写法 -->
-        <!-- <router-link :to="{path:'/Index/123'}">点击跳转</router-link>
-        <router-link :to="{path:'/playlistView'}">go to playlistView</router-link>
-         -->
         <router-view />
+        <!-- 底部播放组件 -->
+        <Player/>
    </div>
 </template>
 <script>
+    import Player from './commponents/Player/Player.vue';
+    export default {
+        components:{Player},
+    }
     // import IndexView from './views/indexView.vue';
     // import PlaylistView from './views/playlistView.vue';
     // import Index from './views/IndexView/Index.vue'

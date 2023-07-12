@@ -7,7 +7,7 @@ export default [
     // 路径重定向
     {
         path:'/',
-        redirect:'/User',
+        redirect:'/Index',
     },
     {
         // path:'/Index/:id',
@@ -40,5 +40,9 @@ export default [
         path:'/Info',
         // 懒加载组件
         component:()=>import('@/views/UserJsx/UserInfo'),
+    },
+    {
+        path:'/Player',
+        component:()=>import('@/commponents/Player/player.vue')
     },
 ]

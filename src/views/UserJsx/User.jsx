@@ -6,10 +6,10 @@ import { getUserAccount, getUserPlaylist, getUserComment } from '@/request';
 export default {
     render() {
         return (
-            <div class="bg-[#f5f5f5] pb-[4.07vw]">
+            <div class="bg-[#f5f5f5] pb-[16vw]">
                 <div class={`w-screen h-[65.28vw] relative overflow-hidden rounded-b-[2vw]`}>
                     <img class="w-[100%] h-[65.28vw]" src={this.data.profile.backgroundUrl} alt="" />
-                    <header class="w-screen h-[12.41vw] absolute top-0 left-0 bg-black flex items-center justify-between pl-[4.72vw] pr-[5.93vw] text-[#fff]">
+                    <header class="w-screen h-[12.41vw] fixed top-0 left-0 z-20 flex items-center justify-between pl-[4.72vw] pr-[5.93vw] text-[#fff]" style="background=rgba(0,0,0,.5)">
                         <Icon nativeOnClick={() => { this.$router.push('/Index') }} class="z-10 w-[6vw] h-[6vw]" icon="ph:arrow-left-bold" />
                         <Icon class="w-[5vw] h-[5.6vw] font-[800]" icon="ri:more-2-fill" />
                     </header>
@@ -54,7 +54,7 @@ export default {
                             <li class="w-[26.2vw] h-[32.41vw] pt-[2.56vw] pl-[1.67vw] flex flex-col justify-between border border-[#efe0df] rounded-[3.5vw] bg-gradient-to-b from-[#fdf2f1] to-[#fefefb]">
                                 <div>
                                     <p class="text-[3.06vw] text-[#878689]">我的喜欢</p>
-                                    <p class="text-[4.26vw] text-[#5b5961] font-[800]">{this.list[0].trackCount}首</p>
+                                    <p class="text-[4.26vw] text-[#5b5961] font-[800]">{this.list[0]?.trackCount}首</p>
                                 </div>
                                 <div class="flex items-center text-[3.15vw] text-[#b1b1ae] mb-[2.69vw]">
                                     <Icon class="mr-[1.11vw]" icon="icon-park-solid:like" />喜欢的音乐
@@ -89,12 +89,12 @@ export default {
                                     <div class="w-[13.89vw] h-[15vw] mb-[1.94vw]">
                                         <div class="relative">
                                             <div class="w-[12.46vw] h-[10vw] absolute top-0 left-[0.8vw] rounded-[3vw]" style="background: rgba(175, 168 ,168, 0.3)"></div>
-                                            <img src={item.coverImgUrl} class="w-[13.89vw] h-[13.89vw] z-[2] rounded-xl absolute top-[1vw] left-0" alt="" />
+                                            <img src={item.coverImgUrl} class="w-[13.89vw] h-[13.89vw] rounded-xl absolute top-[1vw] left-0" alt="" />
                                         </div>
                                     </div>
                                     <div class="ml-[3.06vw] flex flex-col justify-center">
                                         <p class="text-[4.35vw] mb-[1.85vw]" key={index}>{item.name}</p>
-                                        <p class="text-[3.15vw] text-[#7f7f7f]" key={index}>{item.trackCount}首</p>
+                                        <p class="text-[3.15vw] text-[#7f7f7f]" key={index}>{item?.trackCount}首</p>
                                     </div>
                                 </div>
                             ))}
@@ -109,12 +109,12 @@ export default {
                                     <div class="w-[13.89vw] h-[15vw] mb-[1.94vw]">
                                         <div class="relative">
                                             <div class="w-[12.46vw] h-[10vw] absolute top-0 left-[0.8vw] rounded-[3vw]" style="background: rgba(175, 168 ,168, 0.3)"></div>
-                                            <img src={item.coverImgUrl} class="w-[13.89vw] h-[13.89vw] z-[2] rounded-xl absolute top-[1vw] left-0" alt="" />
+                                            <img src={item.coverImgUrl} class="w-[13.89vw] h-[13.89vw] rounded-xl absolute top-[1vw] left-0" alt="" />
                                         </div>
                                     </div>
                                     <div class="ml-[3.06vw] flex flex-col justify-center">
                                         <p class="truncate w-[65vw] text-[4.35vw] mb-[1.85vw]" key={index}>{item.name}</p>
-                                        <p class="truncate w-[65vw] text-[3.15vw] text-[#7f7f7f]" key={index}>{item.trackCount}首,By  {item.creator.nickname},播放{this.dataTruncation(item.playCount)}次</p>
+                                        <p class="truncate w-[65vw] text-[3.15vw] text-[#7f7f7f]" key={index}>{item?.trackCount}首,By  {item.creator.nickname},播放{this.dataTruncation(item.playCount)}次</p>
                                     </div>
                                 </div>
                             ))}
@@ -191,7 +191,7 @@ export default {
     },
     async created() {
         this.data = store.get('_cookieMusic');
-        console.log(this.data);
+        // console.log(this.data);
 
         // 获取id
         const resUser = await getUserAccount();
