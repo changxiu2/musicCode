@@ -1,6 +1,6 @@
 <template>
     <div :class="{dark:switchCheckStatus}">
-        <div class="w-screen h-[100vh] pb-[3vw] bg-[#F7F8FC] dark:bg-black dark:text-[#fff]" :class='drawerVisible ? "overflow-hidden" : "overflow-auto"'>
+        <div class="w-screen h-[100vh] pb-[13vw] bg-[#F7F8FC] dark:bg-black dark:text-[#fff]" :class='drawerVisible ? "overflow-hidden" : "overflow-auto"'>
             <div>
                 <!-- 头部 -->
                 <header class="w-screen px-[3vw] pt-[3vw] h-[20vw] flex justify-between items-center box-border fixed top-0  left-0  z-10 bg-[#F7F8FC] dark:bg-black">
@@ -32,7 +32,7 @@
                 <div class="scroll-wrapper overflow-hidden mt-6" ref="scroll">
                     <div class="scroll-content flex w-[175vw] relative">
                         <menuView v-for="item in menuList" :key="item.id" :menu="item" class="scroll-item mr-[5vw] w-[16vw] flex flex-col items-center"></menuView>
-                        <span class="dark:text-[#1a1c23] absolute top-[6vw] left-[6.3vw] text-[3.5vw] text-[#fff] font-[800]" style="pointer-events: auto;">{{ new Date().getDate() }}</span>
+                        <span class="dark:text-[#1a1c23] w-[15.2vw] absolute top-[6vw] flex justify-center items-center text-[3.5vw] text-[#fff] font-[800]" style="pointer-events: auto;">{{ new Date().getDate() }}</span>
                     </div>
                 </div>
                 <!-- 推荐歌单 -->   
@@ -51,7 +51,7 @@
                                     <div class='w-[30vw] h-[30vw] rounded-2xl overflow-hidden relative'>
                                         <transition name='abc'  v-for=" (item,index) in songItemSize" :key="item">
                                             <div v-if='animateVisible === index' class='absolute top-0 left-0 mb-[1.3vw]"'>
-                                                <img :src='item.uiElement.image.imageUrl' alt='' class='w-[30vw] h-[30vw] rounded-2xl'/>
+                                                <img :src='item?.uiElement.image.imageUrl' alt='' class='w-[30vw] h-[30vw] rounded-2xl'/>
                                             </div>
                                         </transition>
                                         <Icon icon="ion:infinite-outline" class="text-[#fff] w-[6vw] h-[6vw] absolute top-[2vw] right-[2.5vw] font-[800]" />
@@ -561,7 +561,7 @@
                     this.animateVisible = 0;
                 }
                 this.resourceData =
-                    this.songItemSize[this.animateVisible].uiElement.mainTitle.title;
+                    this.songItemSize[this.animateVisible]?.uiElement.mainTitle.title;
                 }, 3000);
             },
             dataTruncation(playVolume) {
@@ -574,6 +574,7 @@
                 }
             },
             // ...mapMutations(['increase']),
+            // 退出弹框
             dialogFn(){
                 Dialog({title:'网易云音乐',message:'确定退出当前账号吗？'})
                 .then(() => {
@@ -614,7 +615,7 @@
             // 推荐歌单
             this.songItem = resBanner.data.data.blocks[1].creatives.slice(1); 
             this.songItemSize = resBanner.data.data.blocks[1].creatives[0].resources;  
-            this.resourceData = resBanner.data.data.blocks[1].creatives[0].resources[0].uiElement.mainTitle.title;
+            this.resourceData = resBanner.data.data.blocks[1].creatives[0].resources[0]?.uiElement.mainTitle.title;
 
             // 新歌新碟
             this.newSong = resBanner.data.data.blocks[5].creatives;

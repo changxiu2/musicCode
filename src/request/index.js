@@ -54,3 +54,7 @@ export const getUserPlaylist = (uid) => http.get('/user/playlist', { params: { u
 // 我的评论
 export const getUserComment = (uid) => http.get('/user/comment/history',{params: { uid } })
 
+// 歌曲
+export const getMP3 = (id) => http.get('/song/url/v1',{params: { id,level:'standard' } })
+
+export const getTrackDetail = (id) => http.get('/song/detail', { params: { ids: id } });
