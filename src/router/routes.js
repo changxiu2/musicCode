@@ -40,9 +40,5 @@ export default [
         path:'/Info',
         // 懒加载组件
         component:()=>import('@/views/UserJsx/UserInfo'),
-    },
-    {
-        path:'/Player',
-        component:()=>import('@/commponents/Player/player.vue')
-    },
+    }
 ]
