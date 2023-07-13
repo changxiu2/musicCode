@@ -1,10 +1,14 @@
 import store from 'storejs';
 import { areaList } from '@vant/area-data';
 import styled from 'styled-components-vue';
+import { getUpdate } from '@/request';
 
 const Wrapper = styled.div`
     .van-picker__confirm{
         color: red;
+    }
+    .van-picker__toolbar,.van-picker-column__item.van-picker-column__item--selected{
+        background: #f5f5f5;
     }
 `;
 export default {
@@ -27,7 +31,7 @@ export default {
                         </li>
                         <li onClick={() => { this.sexVisible = true }} class="px-[4.7vw] h-[17.72vw] border-b-[0.32vw] border-[#e0dfdf] flex items-center justify-between">
                             <p class="font-[800] text-[4.74vw]">性别</p>
-                            <p class="text-[3.84vw] text-[#929292]">{this.sexFn(this.data.profile.gender)}</p>
+                            <p class="text-[3.84vw] text-[#929292]">{this.sexFn(this.arr[0])}</p>
                         </li>
                         <li class="px-[4.7vw] h-[17.72vw] border-b-[0.32vw] border-[#e0dfdf] flex items-center justify-between">
                             <p class="font-[800] text-[4.74vw]">二维码</p>
@@ -41,7 +45,8 @@ export default {
                         </li>
                         <li onClick={() => { this.popupVisible = true }} class="px-[4.7vw] h-[17.72vw] border-b-[0.32vw] border-[#e0dfdf] flex items-center justify-between">
                             <p class="font-[800] text-[4.74vw]">地址</p>
-                            {this.Greeting(this.isLoggedIn)}
+                            <p class="text-[3.84vw] text-[#929292]">{areaList.province_list[this.arr[3]]}&nbsp;{areaList.city_list[this.arr[4]]}</p>
+
                         </li>
                         <li class="px-[4.7vw] h-[17.72vw] border-b-[0.32vw] border-[#e0dfdf] flex items-center justify-between">
                             <p class="font-[800] text-[4.74vw]">大学</p>
@@ -79,18 +84,18 @@ export default {
                             <p onClick={() => { this.nameVisible = false }} class="text[3.84vw]">保存</p>
                         </header>
                         <div class="w-screen h-[20vw] pl-[4.85vw] pr-[2.48vw] relative flex items-center">
-                            <input v-model={this.data.profile.nickname} type="text" class="w-[100%] h-[10.95vw] px-[2vw] leading-[10.95vw] border-b-[0.32vw] border-[#000] outline-none" />
-                            <Icon class="text-[#adadad] w-[5.27vw] h-[5.05vw] absolute top-[8vw] right-[3.21vw]" icon="line-md:remove" />
+                            <input v-model={this.nameInput} type="text" class="w-[100%] h-[10.95vw] px-[2vw] leading-[10.95vw] border-b-[0.32vw] border-[#000] outline-none" />
+                            <Icon nativeOnClick={() => { this.nameInput = '' }} class="text-[#adadad] w-[5.27vw] h-[5.05vw] absolute top-[8vw] right-[3.21vw]" icon="line-md:remove" />
                         </div>
                         {/* <van-picker show-toolbar columns={this.columns} default-index={this.data.profile.gender} onConfirm={this.confirmSex} onCancel={() => { this.nameVisible = false }} /> */}
                     </van-popup>
                     {/* 性别 */}
                     <van-popup v-model={this.sexVisible} position="bottom" style={{ height: '30%' }}>
-                        <van-picker show-toolbar columns={this.columns} default-index={this.data.profile.gender} onConfirm={this.confirmSex} onCancel={() => { this.sexVisible = false }} />
+                        <van-picker show-toolbar columns={this.columns} default-index={this.arr[0]} onConfirm={this.confirmSex} onCancel={() => { this.sexVisible = false }} />
                     </van-popup>
                     {/* 选择地址组件 */}
                     <van-popup v-model={this.popupVisible} position="bottom" style={{ height: '30%' }}>
-                        <van-area v-model={this.area} area-list={areaList} value="110101" columns-num="2" onConfirm={this.confirmArea} onCancel={() => { this.popupVisible = false }} onConfirm-button-text="完成"></van-area>
+                        <van-area area-list={areaList} columns-num="2" onConfirm={this.confirmArea} onCancel={() => { this.popupVisible = false }} onConfirm-button-text="完成"></van-area>
                     </van-popup>
                     {/* 出生日期 */}
                     <van-popup v-model={this.bithVisible} position="bottom" style={{ height: '30%' }}>
@@ -106,36 +111,63 @@ export default {
             areaList,//地址
             popupVisible: false,//判断选择地址开关
             areaDate: {},
+            arr: [],
             isLoggedIn: true,
             bithVisible: false,//出生日期
             minDate: new Date(1990, 0, 1),
             maxDate: new Date(2024, 12, 1),
             currentDate: null,//出生日期
-            area: null,
             sexVisible: false,//性别
             nameVisible: false,//昵称
+            nameInput: null,
             columns: ['男', '女']
         }
     },
-    created() {
+    async created() {
         this.data = store.get('_cookieMusic');
         console.log(this.data);
 
+        this.nameInput = this.data.profile.nickname;//昵称
+
         this.currentDate = new Date(this.data.profile.birthday);
         // this.sex = 'this.data.profile.gender'
+        console.log(this.data.profile.province);
+
+
+        this.arr = [this.data.profile.gender, this.data.profile.birthday, this.data.profile.nickname, this.data.profile.province, this.data.profile.city, this.data.profile.signature]
+        console.log(this.arr);
+
+        console.log(this.arr[0]);
+        // const resUpdate = await getUpdate();
+        // console.log(resUpdate);
     },
     methods: {
         // 点击确定性别
-        confirmSex(e) {
-            this.sexVisible = false;
-            console.log(e);
+        async confirmSex(e) {
+            this.sexVisible = !this.sexVisible;
+            // if (this.arr[0] != this.data.profile.gender) {
+            //     this.arr[0] = this.data.profile.gender;
+            //     const resSex = await getUpdate(this.arr[0], this.arr[1], this.arr[2], this.arr[3], this.arr[4], this.arr[5]);
+            //     console.log(resSex);
+            // }
+            if (e === '男') {
+                this.arr[0] = 1
+            } else {
+                this.arr[0] = 2
+
+            }
+            // console.log(e);
+            await getUpdate(this.arr[0], this.arr[1], this.arr[2], this.arr[3], this.arr[4], this.arr[5]);
+            console.log(this.arr);
         },
         // 点击确定地址
-        confirmArea(e) {
-            this.popupVisible = false;
-            this.areaDate = e;
-            this.isLoggedIn = false;
-            console.log(this.areaDate);
+        async confirmArea(e) {
+            this.popupVisible = !this.popupVisible;
+            this.arr[3] = Number(e[0].code)
+            this.arr[4] = Number(e[1].code)
+            const resArea = await getUpdate(this.arr[0], this.arr[1], this.arr[2], this.arr[3], this.arr[4], this.arr[5]);
+
+            console.log(this.arr);
         },
         // 点击确定出生日期
         confirmDate(e) {
@@ -153,20 +185,15 @@ export default {
 
             return `${year}-${month}-${date}`;
         },
-        Greeting(isLoggedIn) {
-            if (isLoggedIn) {
-                return <p class="text-[3.84vw] text-[#929292]">{areaList.province_list[this.data.profile.province]}&nbsp;&nbsp;{areaList.city_list[this.data.profile.city]}</p>
-            } else {
-                return <p class="text-[3.84vw] text-[#929292]">{this.areaDate[0].name}&nbsp;&nbsp;{this.areaDate[1].name}</p>
-            }
-        },
         sexFn(sex) {
-            if (sex == 1) {
+            if (sex === 1) {
                 return '男'
-            } else if (sex == 2) {
+            } else if (sex === 2) {
                 return '女'
+            } else {
+                return ''
             }
-        }
 
+        },
     }
 }

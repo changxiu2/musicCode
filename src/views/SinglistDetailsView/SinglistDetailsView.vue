@@ -29,7 +29,7 @@
                             <div class="w-[27.77vw] h-[29vw] rounded-xl relative overflow-hidden shadow-md -top-2">
                                 <div class="relative">
                                     <div class="w-[25.81vw] h-[27.35vw] absolute top-0 left-[1vw] rounded-2xl" style="background: rgba(255,255,255, 0.2)"></div>
-                                    <img class="w-[27.77vw] h-[27.88vw] z-[2] rounded-xl absolute top-[1.3vw] left-0" :src="detailsDate.coverImgUrl" alt="">
+                                    <img class="w-[27.77vw] h-[27.88vw] z-[0] rounded-xl absolute top-[1.3vw] left-0" :src="detailsDate.coverImgUrl" alt="">
                                 </div>
                                 <div class='absolute top-[2vw] right-[2.5vw] font-[800] text-[#fff] flex items-center'>
                                     <Icon icon="ion:play" width="10" class='text-[#fff] w-[3vw] h-[3vw]' />
@@ -126,9 +126,10 @@
                 <ul class="pl-[3.11vw] pr-[4.88vw] mb-[5vw] bg-white dark:bg-white dark:bg-opacity-[0.1] rounded-b-[4vw]">
                     <li v-for="(item,index) in singDate" :key="item.id" class="h-[17.94vw] flex items-center justify-between">
                         <div @click="playId(item)" class="flex items-center">
-                            <span class="text-[#999898] font-[800] w-[5.3vw] text-center mr-[2vw] text-[3.02vw]">{{ index+1 }}</span>
+                            <img v-if="item.id === $player._currentTrack.id" class="redImage" src="/static/wave.gif" alt="">
+                            <span v-else class="text-[#999898] font-[800] w-[5.3vw] text-center mr-[2vw] text-[3.02vw]">{{ index+1 }}</span>
                             <div class="flex flex-col w-[63.04vw]">
-                                <p class="text-[4.09vw] truncate">{{ item.name }}</p>
+                                <p :class="item.id === $player._currentTrack.id ? 'text-[#D15B57]' : ''" class="text-[4.09vw] truncate">{{ item.name }}</p>
                                 <div>
                                     <div class="text-[2.93vw] text-[#908f97] dark:text-[#BABAA2] flex truncate">
                                         <p v-for="(item2,index) in item.ar" :key="item2.id">
@@ -180,6 +181,8 @@
             // 歌曲列表数据
             const resSingDates = await fetchSingQus(this.$route.query.id);
             this.singDate = resSingDates.data.songs;
+            // 存歌曲
+            store.set('songs',resSingDates.data.songs);
             console.log(this.singDate);
             // 小轮播数据
             const resMinBanner = await musicSlider(this.$route.query.id)
@@ -228,10 +231,10 @@
             },
             // 从头播放
             playAll() {
-                window.$player.replacePlaylist(this.singDate.map((song) => song?.id),'','')
+                this.$player.replacePlaylist(this.singDate.map((song) => song?.id),'','')
             },
             playId(item){
-                window.$player.replacePlaylist(this.singDate.map((song) => song.id),'','',item.id)
+                this.$player.replacePlaylist(this.singDate.map((song) => song.id),'','',item.id)
             }
         },
         mounted(){

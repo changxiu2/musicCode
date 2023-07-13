@@ -27,6 +27,10 @@ export default [
         component:SinglistDetailsView,
     },
     {
+        path:'/MusicPlay',
+        component:()=>import('@/views/MusicPlayView/MusicPlay.vue'),
+    },
+    {
         path:'/Login',
         // 懒加载组件
         component:()=>import('@/views/Login.vue'),
@@ -40,5 +44,5 @@ export default [
         path:'/Info',
         // 懒加载组件
         component:()=>import('@/views/UserJsx/UserInfo'),
-    }
+    },
 ]
