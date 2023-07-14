@@ -10,7 +10,7 @@
                             <p class=" text-[4.44vw] ml-[4.85vw]">歌单</p>
                         </div>
                         <div v-else class="flex justify-start items-center">
-                            <van-notice-bar delay="0.5" scrollable background="#8C8B48" color="#fff" :text="detailsDate.name" class="text-[4.44vw] w-[39vw] h-[5vw] leading-[5vw]"/>
+                            <van-notice-bar delay="0.5" scrollable color="#fff" :text="detailsDate.name" class="bg-[#8C8B48] dark:bg-[#5C5B2F] text-[4.44vw] w-[39vw] h-[5vw] leading-[5vw]"/>
                             <div class="w-[16.6vw] h-[6.67vw] rounded-[5vw] flex justify-center items-center ml-[2.48vw] text-[3.16vw]"  style="background: rgba(255,255,255, 0.2)">
                                 <Icon class="w-[3.08vw] h-[3.19vw] mr-[1.35vw]" icon="material-symbols:add-box" />
                                 收藏
@@ -205,7 +205,7 @@
             dataTruncation(playVolume) {
                 if (playVolume > 100000000) {
                     return `${Math.floor(playVolume / 100000000)}亿`;
-                } else if (playVolume > 100000) {
+                } else if (playVolume > 10000) {
                     return `${Math.floor(playVolume / 10000)}万`;
                 } else {
                     return playVolume;

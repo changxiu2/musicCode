@@ -2,13 +2,15 @@
     <div class="w-screen h-screen">
         <router-view />
         <!-- 底部播放组件 -->
-        <Player class="z-[20] h-[13.4vw]" v-if="PlayFn"/>
+        <Player class="z-[55] h-[13.4vw]" v-if="PlayFn"/>
+        <Nav></Nav>
    </div>
 </template>
 <script>
     import Player from './commponents/Player/Player.vue';
+    import NavView from './views/NavView.vue';
     export default {
-        components:{Player},
+        components:{Player,NavView},
         computed:{
             PlayFn(){
                 return this.$route.path !== '/MusicPlay';

@@ -47,7 +47,7 @@
                     <div class="ml-[4.5vw] mt-[4.722vw] scroll-wrapper overflow-hidden" ref="scrollsong">
                         <div class="flex scroll-content w-[200vw]">
                             <div class='relative mr-[2.5vw]'>
-                                <div class='w-[30vw] relative z-[1]'>
+                                <div class='w-[30vw] relative '>
                                     <div class='w-[30vw] h-[30vw] rounded-2xl overflow-hidden relative'>
                                         <transition name='abc'  v-for=" (item,index) in songItemSize" :key="item">
                                             <div v-if='animateVisible === index' class='absolute top-0 left-0 mb-[1.3vw]"'>
@@ -567,7 +567,7 @@
             dataTruncation(playVolume) {
                 if (playVolume > 100000000) {
                     return `${Math.floor(playVolume / 100000000).toFixed(1)}亿`;
-                } else if (playVolume > 100000) {
+                } else if (playVolume > 10000) {
                     return `${Math.floor(playVolume / 10000)}万`;
                 } else {
                     return playVolume;

@@ -63,5 +63,6 @@ export const getSinger = ()=>http.get('/artist/list?type=1&area=96&initial=b')
 // 反向更改数据接口
 export const getUpdate = (gender,birthday,nickname,province,city,signature) => http.get('/user/update', { params: { gender,birthday,nickname,province,city,signature} });
 
-
+// MV排行
+export const MvList = (area) => http.get('/top/mv', { params: { limit: 50, area } });
 

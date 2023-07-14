@@ -23,7 +23,7 @@
             dataTruncation(playVolume) {
                 if (playVolume > 100000000) {
                     return `${Math.floor(playVolume / 100000000)}亿`;
-                } else if (playVolume > 100000) {
+                } else if (playVolume > 10000) {
                     return `${Math.floor(playVolume / 10000)}万`;
                 } else {
                     return playVolume;
