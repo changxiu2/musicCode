@@ -7,7 +7,7 @@ export default [
     // 路径重定向
     {
         path:'/',
-        redirect:'/Index',
+        redirect:'/NavView',
     },
     {
         // path:'/Index/:id',
@@ -44,5 +44,15 @@ export default [
         path:'/Info',
         // 懒加载组件
         component:()=>import('@/views/UserJsx/UserInfo'),
+    },
+    {
+        path:'/MvView',
+        // 懒加载组件
+        component:()=>import('@/views/MvView.vue'),
+    },
+    {
+        path:'/NavView',
+        // 懒加载组件
+        component:()=>import('@/views/NavView.vue'),
     },
 ]
