@@ -28,6 +28,12 @@ const Wrapper = styled.div`
     .van-tabs__wrap .van-tabs__nav.van-tabs__nav--line{
         background-color:var(--primary-dark);
     }
+    .van-tabs__wrap{
+        background-color: #f5f5f5;
+    }
+    .dark .van-tabs__wrap{
+        background-color: #323233;
+    }
 `;
 export default {
     render() {
@@ -37,7 +43,7 @@ export default {
                     <div class="bg-[#f5f5f5] pb-[16vw] dark:bg-[#141414] dark:text-white">
                         <div class={`w-screen h-[65.28vw] relative overflow-hidden rounded-b-[2vw]`}>
                             <img class="w-[100%] h-[65.28vw]" src={this.data.profile.backgroundUrl} alt="" />
-                            <header class="w-screen h-[12.41vw] fixed top-0 left-0 z-20 flex items-center justify-between pl-[4.72vw] pr-[5.93vw] text-[#fff]" style="background=rgba(0,0,0,.7)">
+                            <header class="w-screen h-[12.41vw] bg-white fixed top-0 left-0 z-10 flex items-center justify-between pl-[4.72vw] pr-[5.93vw]">
                                 <Icon nativeOnClick={() => { this.$router.push('/Index') }} class="z-10 w-[6vw] h-[6vw]" icon="ph:arrow-left-bold" />
                                 <Icon class="w-[5vw] h-[5.6vw] font-[800]" icon="ri:more-2-fill" />
                             </header>
@@ -176,8 +182,8 @@ export default {
                                         <div>
                                             <div class="px-[4.44vw] h-[24.49vw] border-b-[0.23vw] border-[#ccc]">
                                                 <div class="w-[100%] h-[7.2vw] mb-[1.94vw] flex items-center justify-between">
-                                                    <img class="w-[7.22vw] h-[7.22vw] rounded-[2vw]" src={JSON.parse(this.comment[0].resourceInfo).coverImgUrl} alt="" />
-                                                    <p class="w-[60.95vw] truncate text-[3.27vw] text-[#cfcfcf]"><span class="mx-[2.37vw]">歌单</span><span>[{JSON.parse(this.comment[0].resourceInfo).name}]</span></p>
+                                                    <img class="w-[7.22vw] h-[7.22vw] rounded-[2vw]" src={JSON.parse(this?.comment[0]?.resourceInfo).coverImgUrl} alt="" />
+                                                    <p class="w-[60.95vw] truncate text-[3.27vw] text-[#cfcfcf]"><span class="mx-[2.37vw]">歌单</span><span>[{JSON.parse(this?.comment[0]?.resourceInfo).name}]</span></p>
                                                     <Icon class="w-[4.29vw] text-[#999]" icon="uiw:like-o" />
                                                 </div>
                                                 <p class="text-[3.72vw] mt-[3.84vw] mb-[1vw] font-[800]">{this.comment[0].content}</p>
@@ -261,7 +267,7 @@ export default {
 
         const resSinger = await getSinger();
         this.singerDate = resSinger.data.artists.slice(0, 6);
-        console.log(resSinger.data.artists.slice(0, 6));
+        // console.log(resSinger.data.artists.slice(0, 6));
     },
     methods: {
         // 转换点击数
