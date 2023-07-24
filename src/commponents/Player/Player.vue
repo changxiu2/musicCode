@@ -1,17 +1,14 @@
 <template>
     <div :class="{dark:switchCheckStatus}">
-        <div class="flex h-[13.4vw] fixed bottom-0 left-0 w-screen bg-white dark:bg-[#202028] dark:text-white">
+        <div class="flex h-[13.4vw] w-screen bg-white dark:bg-[#202028] dark:text-white">
             <div class="w-[91vw] m-auto flex items-center justify-between">
                 <div @click="musicPlayFn" class="flex items-center">
                     <div class="w-[11vw] bg-[#030202] rounded-[50%] p-[1.78vw] flex items-center ">
-                        <img :src="$player._currentTrack.al?.picUrl" class="w-[7.64vw] h-[7.64vw] rounded-[50%] bg-[pink]" :class="$player._playing ? 'rotate' : '' ">
+                        <img :src="$player._currentTrack.al?.picUrl" class="w-[7.64vw] h-[7.64vw] rounded-[50%] bg-[#f5f5f5]" :class="$player._playing ? 'rotate' : '' ">
                     </div>
                     <!-- 作者-歌名 -->
                     <div class="w-[56.21vw] ml-[2.93vw] text-[3.95vw] flex items-center truncate">
                         <p class="text-[3.28vw]">{{$player._currentTrack.name}}&nbsp;</p>
-                        <!-- <p class="text-[3.28vw] text-[#abaab0]"> -->
-                            <!-- {{ $player._currentTrack.ar[0].name }} -->
-                        <!-- </p> -->
                         <div v-if="Array.isArray($player._currentTrack.ar)">
                             <p class="text-[#abaab0]">- {{ $player._currentTrack.ar[0].name }}</p>
                         </div>
@@ -27,9 +24,9 @@
                 </div>
             </div>
             <!-- 音乐列表 -->
-            <van-popup v-model="musicListVisible" round position="bottom" :overlay-style="{background:'rgba(0,0,0,0.4)',zIndex:10,}" :style="{ height: '60%'}" class="dark:bg-[#202028] dark:text-white" >
+            <van-popup v-model="musicListVisible" round position="bottom" :overlay-style="{background:'rgba(0,0,0,0.4)'}" :style="{ height: '60%'}" class="dark:bg-[#202028] dark:text-white" >
                 <div class="w-[100%]">
-                    <div class="w-[100%] fixed bg-white dark:bg-[#202028] dark:text-white pt-[5.73vw] pl-[4.53vw] pr-[5.3vw] rounded-2xl">
+                    <div class="w-[100%] fixed  z-[1] bg-white dark:bg-[#202028] dark:text-white pt-[5.73vw] pl-[4.53vw] pr-[5.3vw] rounded-2xl">
                         <!-- 当前播放 -->
                         <header class="text-[5.04vw] font-[900]">当前播放<span class="text-[3.25vw] text-[#909091]">({{ this.singDate?.length }})</span></header>
                         <!-- 下载收藏删除 -->

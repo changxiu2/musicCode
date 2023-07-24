@@ -64,5 +64,18 @@ export const getSinger = ()=>http.get('/artist/list?type=1&area=96&initial=b')
 export const getUpdate = (gender,birthday,nickname,province,city,signature) => http.get('/user/update', { params: { gender,birthday,nickname,province,city,signature} });
 
 // MV排行
-export const MvList = (area) => http.get('/top/mv', { params: { limit: 50, area } });
+export const fetchMvList = (area) => http.get('/top/mv', { params: { limit: 50, area } });
 
+//歌词
+export const lyricText = (id) => http.get('/lyric', { params: { id } });
+
+
+// MV视频
+export const fetchMvUrl = (id) => http.get('/mv/url', { params: { id } });
+// MV视频信息
+export const fetchMvDetail = (mvid) => http.get('/mv/detail', { params: { mvid } });
+// 获取 mv 点赞转发评论数数据
+export const fetchMvDetailInfo = (mvid) => http.get('/mv/detail/info', { params: { mvid } });
+
+// MV评论
+export const fetchCommentMv = (id) => http.get('/comment/mv',{ params:{ id, limit: 50 } });

@@ -10,7 +10,7 @@
                             <p class=" text-[4.44vw] ml-[4.85vw]">歌单</p>
                         </div>
                         <div v-else class="flex justify-start items-center">
-                            <van-notice-bar delay="0.5" scrollable color="#fff" :text="detailsDate.name" class="bg-[#8C8B48] dark:bg-[#5C5B2F] text-[4.44vw] w-[39vw] h-[5vw] leading-[5vw]"/>
+                            <van-notice-bar delay="0.5" scrollable color="#fff" :text="detailsDate.name" class="text-[4.44vw] w-[39vw] h-[5vw] leading-[5vw]"/>
                             <div class="w-[16.6vw] h-[6.67vw] rounded-[5vw] flex justify-center items-center ml-[2.48vw] text-[3.16vw]"  style="background: rgba(255,255,255, 0.2)">
                                 <Icon class="w-[3.08vw] h-[3.19vw] mr-[1.35vw]" icon="material-symbols:add-box" />
                                 收藏
@@ -98,7 +98,7 @@
                         </li>
                         <li class="w-[28.6vw] h-[10.12vw] flex items-center justify-center rounded-[6vw] bg-[#f9393f]">
                             <Icon class="w-[5.08vw] h-[5.19vw]" icon="material-symbols:add-box" />
-                            <p class="ml-[2.04vw]">{{detailsDate.subscribedCount}}</p>
+                            <p class="ml-[2.04vw]">{{dataTruncation(detailsDate.subscribedCount)}}</p>
                         </li>
                     </ul>
                 </div>
@@ -205,8 +205,8 @@
             dataTruncation(playVolume) {
                 if (playVolume > 100000000) {
                     return `${Math.floor(playVolume / 100000000)}亿`;
-                } else if (playVolume > 10000) {
-                    return `${Math.floor(playVolume / 10000)}万`;
+                } else if (playVolume > 100000) {
+                    return `${(Math.floor((playVolume * 10) / 10000).toFixed(1))/10}万`;
                 } else {
                     return playVolume;
                 }
@@ -245,3 +245,11 @@
         },
     }
 </script>
+<style scoped>
+    .van-notice-bar{
+        background-color: #8C8B48;
+    }
+    .dark .van-notice-bar{
+        background-color: #5C5B2F;
+    }
+</style>

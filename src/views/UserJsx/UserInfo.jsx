@@ -155,18 +155,11 @@ export default {
         // 点击确定性别
         async confirmSex(e) {
             this.sexVisible = !this.sexVisible;
-            // if (this.arr[0] != this.data.profile.gender) {
-            //     this.arr[0] = this.data.profile.gender;
-            //     const resSex = await getUpdate(this.arr[0], this.arr[1], this.arr[2], this.arr[3], this.arr[4], this.arr[5]);
-            //     console.log(resSex);
-            // }
             if (e === '男') {
                 this.arr[0] = 1
             } else {
                 this.arr[0] = 2
-
             }
-            // console.log(e);
             await getUpdate(this.arr[0], this.arr[1], this.arr[2], this.arr[3], this.arr[4], this.arr[5]);
             console.log(this.arr);
         },

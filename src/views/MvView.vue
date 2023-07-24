@@ -1,10 +1,12 @@
 <template>
     <div :class="{dark:switchCheckStatus}">
-        <div class="w-[100vw] h-[100%] dark:bg-[#151515] dark:text-white">
+        <div class="w-[100vw] h-[100%] dark:bg-[#151515] dark:text-white pb-[27vw]">
+            <!-- 头部 -->
             <header class="w-screen z-[2] h-[15.46vw] px-[4.7vw] fixed bg-white dark:bg-[#2C2C2C] top-0 left-0 flex items-center justify-start text-[4.85vw] font-[800] mb-[5vw]">
                 <Icon @click.native="IndexFn" class="w-[5.98vw] h-[5.6vw] font-[800] mr-[5.42vw]" icon="icon-park-outline:arrow-left" />
                 <p>MV排行榜</p>
             </header>
+            <!-- 榜单 -->
             <van-tabs v-model="active" @change="changeTab" swipeable animated sticky offset-top="15.46vw">
                 <van-tab v-for="item in nav" :key="item.id" :title="item" title-style="text-[#565656] font-[800]">
                     <div class="px-[4.7vw] mt-[20vw]">
@@ -13,7 +15,7 @@
                             <Icon class="w-[3.95vw] h-[3.95vw] ml-[1.47vw] text-[#bbb]" icon="icon-park-outline:attention" :rotate="2" />
                         </p>
                         <div v-for="(item2,index) in MvList" :key="item2.id">
-                            <div class="relative">
+                            <div @click="showThisVideo(item2.id)" class="relative">
                                 <img class="w-[91.2vw] h-[51.13vw] rounded-[2.3vw]" :src="item2.cover" alt="">
                                 <div class='absolute top-[2vw] right-[2.5vw] font-[800] text-[#fff] flex items-center'>
                                     <Icon icon="ion:play" width="10" class='text-[#fff] w-[3vw] h-[3vw]' />
@@ -24,7 +26,8 @@
                                 <div class="w-[9.59vw] flex flex-col justify-center relative">
                                     <p v-if="index+1<=3" class="text-[4.74vw] font-[900] text-[#f73b40]">{{covering(index+1)}}</p>
                                     <p v-else class="text-[4.74vw] font-[900] text-[#919191]">{{covering(index+1)}}</p>
-                                    <div class="flex absolute right-[4vw] bottom-[-2.5vw]">
+                                    <!-- 排名提示 -->
+                                    <div class="flex relative items-center">
                                         <span v-if="item2.lastRank == index + 1" class="text-[#898989] flex" >
                                             <Icon icon="ci:line-m" :rotate="1"/></span>
                                         <span v-else-if="item2.lastRank <= index + 1 && item2.lastRank != -1" class="text-[#71b3e2] flex text-[2.5vw] items-center" >
@@ -34,7 +37,7 @@
                                             <Icon icon="ph:triangle-fill" />
                                             <i>{{ item2.lastRank - (index + 1) }}</i>
                                         </span>
-                                        <span v-else class="text-[#6d9c65] flex text-[2vw] items-center absolute right-0 bottom-0" >NEW</span>
+                                        <span v-else class="text-[#6d9c65] text-[2vw] absolute right-[4vw] bottom-[-2.5vw]" >NEW</span>
                                     </div>
                                 </div>
                                 <!-- item2.lastRank -  -->
@@ -52,7 +55,7 @@
 </template>
 <script>
     import store from 'storejs';
-    import { MvList } from '@/request';
+    import { fetchMvList } from '@/request';
     export default {
         data() {
             return {
@@ -67,7 +70,7 @@
             // 深色模式
             this.switchCheckStatus = store.get('switch');
             // 数据
-            const res = await MvList(this.initial);
+            const res = await fetchMvList(this.initial);
             this.MvList = res.data.data;
         },
         methods:{
@@ -76,7 +79,6 @@
                 this.$router.push('/Index')
             },
             changeTab(title) {
-                console.log(title);
                 this.initial = this.nav[title];
             },
             // 个位数前加0补位
@@ -93,12 +95,15 @@
                     return playVolume;
                 }
             },
+            // 跳转到MV播放页面
+            showThisVideo(id){
+                this.$router.push({name:'MvPlayView',params:{id}})
+            },
         },
         watch: {
             initial(value) {
-                MvList(value).then((res) => {
+                fetchMvList(value).then((res) => {
                     this.MvList = res.data.data;
-                    console.log(this.MvList);
                 });
             },
         },
@@ -114,7 +119,7 @@
         background-color: #fff !important;
     }
     /* 导航字体模式 */
-    .van-tab .van-tab__text.van-tab__text--ellipsis{
+    .van-tab .van-tab__text--ellipsis{
         font-size:4vw;
         color:#656565;
     }
@@ -125,5 +130,13 @@
         z-index: 1;
         width: 26px;
         height: 5px;
+    }
+    /* 选中标题加粗 */
+    .van-tab--active .van-tab__text.van-tab__text--ellipsis{
+        font-weight: 800;
+        color: #000;
+    }
+    .van-tabs .van-sticky--fixed {
+        z-index: 10 !important;
     }
 </style>
